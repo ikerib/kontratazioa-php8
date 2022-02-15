@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Alarmak{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Alarmak</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Alarmak</h3>
+                <div class="card-tools">
+                    <a class="btn btn-outline-primary" href="{{ path('notification_new') }}">Alarma berria</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="myDatatable" class="table table-bordered table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Noiz</th>
+                            <th>Kontratua</th>
+                            <th>Lotea</th>
+                            <th>Aktibo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for notification in notifications %}
+                            <tr class="{% if notification.notify==1 %} bg-success p-2 text-dark bg-opacity-25 {% endif %}">
+                                <td>{{ notification.id }}</td>
+                                <td>{{ notification.noiz ? notification.noiz|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ notification.lote.kontratua }}</td>
+                                <td>{{ notification.lote }}</td>
+                                <td>{{ notification.notify }}</td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="{{ path('notification_edit', {'id': notification.id}) }}"><i class="fas fa-edit"></i></a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            {{ include('notification/_delete_form.html.twig') }}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

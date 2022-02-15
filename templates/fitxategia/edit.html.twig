@@ -1,0 +1,34 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Fitxategiak{% endblock %}#}
+
+{#{% block breadcrumb %}#}
+{#    <li class="breadcrumb-item"><a href="{{ path('fitxategi_mota_index') }}">Fitxategia</a></li>#}
+{#    <li class="breadcrumb-item active">{{ "Edit" | trans}}</li>#}
+{#{% endblock %}#}
+
+{#{% block body %}#}
+{#    <div class="row">#}
+{#        <div class="col-12">#}
+{#            <div class="card">#}
+{#                <div class="card-header">#}
+{#                    <h3 class="card-title">Fitxategia</h3>#}
+{#                    <div class="card-tools">#}
+{#                        <a id="btnSaveButton" class="btn btn-outline-primary" href="#"><i class="fas fa-save"></i>&nbsp;{{ "Save" | trans}}</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="card-body">#}
+                    {{ include('fitxategia/_form.html.twig', {'button_label': 'Update'}) }}
+{#                </div>#}
+{#                <div class="card-footer"></div>#}
+
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+
+{#{% block javascripts %}#}
+
+{#     {{ encore_entry_script_tags('fitxategia') }}#}
+
+{#{% endblock %}#}

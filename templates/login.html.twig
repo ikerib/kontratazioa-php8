@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block javascripts %}
+
+        {{ encore_entry_script_tags('app') }}
+
+    {% endblock %}
+</head>
+<body class="hold-transition layout-top-nav text-sm">
+<div class="wrapper">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row mb-4"></div>
+                <div class="row">
+                    <div class="col-4">&nbsp;</div>
+                    <div class="col-4">
+                        {% block body %}{% endblock %}
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+</div>
+<!-- ./wrapper -->
+
+    <div style="display: none;">
+        <label for="appLocale"></label><input id="appLocale" type="text" value="{{ app.request.locale  }}">
+    </div>
+
+</body>
+</html>

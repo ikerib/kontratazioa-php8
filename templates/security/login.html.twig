@@ -1,0 +1,38 @@
+{% extends 'login.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            {{ app.user.username }} bezala hasi duzu saioa, <a href="{{ path('app_logout') }}">Amaitu saioa</a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Hasi saioa</h1>
+    <label for="inputUsername">Erabiltzailea</label>
+    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+    <label for="inputPassword">Pasahitza</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" name="remember_me"> Oroitu nazazu
+        </label>
+    </div>
+
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Hasi saioa
+    </button>
+</form>
+{% endblock %}

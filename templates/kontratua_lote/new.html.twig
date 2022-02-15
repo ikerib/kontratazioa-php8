@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kontratuak{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Lote berria</h3>
+                <div class="card-tools">
+                    <a class="btn" href="{{ path('kontratua_index') }}">{{ "back to list" | trans}}</a>
+                    <button id="btnSaveButton" class="btn btn-primary">Gorde</button>
+                </div>
+            </div>
+            <div class="card-body">
+
+                {{ include('kontratua_lote/_form.html.twig') }}
+
+            </div>
+            <div class="card-footer">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

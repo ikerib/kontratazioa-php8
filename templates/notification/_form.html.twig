@@ -1,0 +1,23 @@
+{{ form_start(form) }}
+        {# {{ form_widget(form) }}#}
+
+        {{ form_row(form.user) }}
+
+{#        <div class="mb-3 row">#}
+{#            <label class="col-form-label col-sm-2 required" for="cmbKontratua">Kontratuak</label>#}
+{#            <div class="col-sm-10">#}
+{#                <select name="kontratua" id="cmbKontratua" class="form-control select2">#}
+{#                    <option value="-1">Aukeratu bat</option>#}
+{#                    {% for k in kontratuak %}#}
+{#                        <option value="{{ k.id }}">{{ k }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#            </div>#}
+{#        </div>#}
+
+        {{ form_row(form.lote)}}
+        {{ form_row(form.noiz) }}
+        <div style="display: none;">
+            <button id="crudSubmitButton" class="btn">{{ button_label|default(' Save') }}</button>
+        </div>
+{{ form_end(form) }}

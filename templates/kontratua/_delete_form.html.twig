@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('kontratua_delete', {'id': kontratua_lote.id}) }}" >
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ kontratua_lote.id) }}">
+    <button class="btnDeleteButton btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></button>
+</form>

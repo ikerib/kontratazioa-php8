@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}B.E.Z. motak{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">B.E.Z. motak</li>
+    <li class="breadcrumb-item active">berria</li>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">B.E.Z. mota berria</h3>
+                    <div class="card-tools">
+                        <a class="btn" href="{{ path('tipo_iva_index') }}">{{ "back to list" | trans}}</a>
+                        <button id="btnSaveButton" class="btn btn-primary">Gorde</button>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    {{ include('tipo_iva/_form.html.twig') }}
+
+                </div>
+                <div class="card-footer">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

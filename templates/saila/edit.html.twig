@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Motak{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path('saila_index') }}">Sailak</a></li>
+    <li class="breadcrumb-item active">{{ "Edit" | trans}}</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Sailak</h3>
+                <div class="card-tools">
+                    <a id="btnSaveButton" class="btn btn-outline-primary" href="#"><i class="fas fa-save"></i>&nbsp;{{ "Save" | trans}}</a>
+                </div>
+            </div>
+            <div class="card-body">
+                {{ include('saila/_form.html.twig', {'button_label': 'Update'}) }}
+            </div>
+            <div class="card-footer"></div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

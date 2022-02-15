@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kontratuak{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Kontratuak</li>
+    <li class="breadcrumb-item active">berria</li>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-12">
+            {{ form_start(form) }}
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Idatzi mezua:</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+
+                    {% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+                    {{ form_row(form.nori) }}
+                    {{ form_row(form.gaia) }}
+                    {{ form_row(form.editor) }}
+
+                </div>
+
+
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-right">
+{#                        <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Draft</button>#}
+{#                        <button type="submit" class="btn btn-primary">#}
+                            {{ form_widget(form.send, { 'label': 'Bidali' }) }}
+{#                        </button>#}
+                    </div>
+{#                    <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>#}
+                </div>
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('search') }}
+
+{% endblock %}

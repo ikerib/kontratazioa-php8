@@ -1,0 +1,60 @@
+{% form_theme form 'kontratua/_form_theme.html.twig' %}
+{{ form_start(form) }}
+{#    {{ form_widget(form) }}#}
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title m-0">Xehetasunak</h5>
+            </div>
+            <div class="card-body">
+                {{ form_row(form.espedientea) }}
+                {{ form_row(form.izena_eus) }}
+                {{ form_row(form.izena_es ) }}
+                {{ form_row(form.artxiboa ) }}
+                {{ form_row(form.arduraduna ) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title m-0">Sailkapenak</h5>
+            </div>
+            <div class="card-body">
+                {{ form_row(form.mota) }}
+                {{ form_row(form.egoera) }}
+                {{ form_row(form.prozedura) }}
+                {{ form_row(form.saila) }}
+                <div class="mb-4 row">
+                    {{ form_label(form.espedienteElektronikoa) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(form.espedienteElektronikoa) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    <div class="card card-gray collapsed-card">
+        <div class="card-header">
+            <h3 class="card-title">Oharrak {% if kontratua.oharrak %}<span class="badge badge-warning right">!!</span>{% endif %}</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            {{ form_errors(form.oharrak) }}
+            {{ form_widget(form.oharrak) }}
+        </div>
+    </div>
+</div>
+<div style="display: none;">
+    <button id="crudSubmitButton" class="btn">{{ button_label|default(' Save') }}</button>
+</div>
+{{ form_end(form) }}
+
+

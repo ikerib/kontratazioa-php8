@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kontratuak{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Kontratuak <small>iraungitze fetxa gertuen durenak</small></h3>
+                </div>
+                <div class="card-body">
+                    <table id="dtNoSorting" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{ "Espedientea" | trans}}</th>
+                            <th>{{ "Lote" | trans}}</th>
+                            <th>{{ "Mota" | trans }}</th>
+                            <th>{{ "Izena_eus" | trans}}</th>
+                            <th>{{ "Sinadura" | trans}}</th>
+                            <th>{{ "Prorroga1" | trans}}</th>
+                            <th>{{ "Prorroga2" | trans}}</th>
+                            <th>{{ "Prorroga3" | trans}}</th>
+                            <th>{{ "Amaitua" | trans}}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for lote in loteak %}
+                            <tr>
+                                <td><a href="{{ path('kontratua_edit', { 'id': lote.kontratua.id }) }}">{{ lote.kontratua.espedientea }}</a></td>
+                                <td>{{ lote.name }}</td>
+                                <td>{{ lote.kontratua.mota }}</td>
+                                <td>{{ lote.kontratua.izenaEus }}</td>
+                                <td class="text-center">{{ lote.sinadura ? lote.sinadura|date('Y-m-d') : '' }}</td>
+                                <td class="text-center">{{ lote.prorroga1 ? lote.prorroga1|date('Y-m-d') : '' }}</td>
+                                <td class="text-center">{{ lote.prorroga2 ? lote.prorroga2|date('Y-m-d') : '' }}</td>
+                                <td class="text-center">{{ lote.prorroga3 ? lote.prorroga3|date('Y-m-d') : '' }}</td>
+                                <td>{% if lote.amaitua %}<span class="badge badge-success">Bai</span>{% else %}<span class="badge badge-danger">Ez</span>{% endif %}</td>
+                                <td class="text-center">
+                                    <a href="{{ path('kontratua_edit', {'id': lote.kontratua.id}) }}"><i class="fas fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="card-footer"></div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

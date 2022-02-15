@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prozedurak{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path('prozedura_index') }}">Prozedurak</a></li>
+    <li class="breadcrumb-item active">{{ "Edit" | trans}}</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Prozedurak</h3>
+                <div class="card-tools">
+                    <a id="btnSaveButton" class="btn btn-outline-primary" href="#"><i class="fas fa-save"></i>&nbsp;{{ "Save" | trans}}</a>
+                </div>
+            </div>
+            <div class="card-body">
+
+                {{ include('prozedura/_form.html.twig', {'button_label': 'Update'}) }}
+
+            </div>
+            <div class="card-footer"></div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

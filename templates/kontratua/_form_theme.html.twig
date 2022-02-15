@@ -1,0 +1,17 @@
+{% block _kontratua_fitxategiak_widget %}
+    <ul id="kontratua-fitxategia-fields-list"
+        data-prototype="{{ form_widget(prototype)|e }}"
+        data-widget-tags="{{ '<li></li>'|e }}"
+        data-widget-counter="{{ value|length }}"
+    >
+        {% for key,productImageForm in form.children %}
+            {{ form_widget(productImageForm) }}
+
+        {% endfor %}
+    </ul>
+
+    <button type="button"
+            class="add-another-collection-widget"
+            data-list-selector="#kontratua-fitxategia-fields-list">Gehitu fitxategia</button>
+{% endblock %}
+

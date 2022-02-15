@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kontratistak{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Kontratistak</li>
+    <li class="breadcrumb-item active">berria</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Kontratistak</h3>
+                <div class="card-tools">
+                    <a class="btn btn-outline-primary" href="{{ path('kontratista_new') }}">Kontratista berria</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="myDatatable" class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ "Izena_eus" | trans}}</th>
+                        <th>{{ "actions" | trans}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for kontratistum in kontratistas %}
+                    <tr>
+                        <td>{{ kontratistum.id }}</td>
+                        <td>{{ kontratistum.izenaEus }}</td>
+                        <td class="text-center">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="btn btn-xs btn-primary" href="{{ path('kontratista_edit', {'id': kontratistum.id}) }}"><i class="fas fa-edit"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    {{ include('kontratista/_delete_form.html.twig') }}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+
+            </div>
+            <div class="card-footer"></div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

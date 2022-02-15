@@ -1,0 +1,165 @@
+{{ form_start( form, { 'attr': { 'id': 'form_lote_new'}}) }}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-gray-dark">
+            <div class="card-header">
+                <h5 class="card-title m-0">Xehetasunak</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3 row">
+                            {{ form_label(form.name, null, {'label_attr': {'class':'col-sm-4'}})}}
+                            <div class="col-sm-8 input-group">
+                                {{ form_widget(form.name)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+{#                        {{ form_row(form.amaitua) }}#}
+                        {{ form_row(form.kontratista) }}
+                    </div>
+                </div>
+
+
+                <div class="row">
+                <div class="col-6">
+                    <div class="mb-3 row">
+                        {{ form_label(form.sinadura, null, {'label_attr': {'class':'col-sm-4'}})}}
+                        <div class="col-sm-8 input-group date">
+                            {{ form_widget(form.sinadura)}}
+                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        {{ form_label(form.fetxaIraupena, null, {'label_attr': {'class':'col-sm-4'}})}}
+                        <div class="col-sm-8 input-group date">
+                            {{ form_widget(form.fetxaIraupena)}}
+                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        {{ form_label(form.tipoIva, null, {'label_attr': {'class':'col-sm-4'}})}}
+                        <div class="col-sm-6 input-group date">
+                            {{ form_widget(form.tipoIva)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.luzapena) }}
+                    {{ form_row(form.iraupena) }}
+                    {{ form_row(form.zenbatekoarenUnitatea) }}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <div class="card card-gray-dark">
+            <div class="card-header">
+                <h5 class="card-title m-0">Aurrekontua</h5>
+            </div>
+            <div class="card-body">
+
+
+                <div class="mb-3 row">
+                    <div class="col-5">
+                        {{ form_label(form.aurrekontuaIvaGabe, null, {'label_attr': {'class':'col-width-100'}})}}
+                        {{ form_widget(form.aurrekontuaIvaGabe)}}
+                    </div>
+                    <div class="col-2">
+{#                        {{ form_label(form.tipoIva, null, {'label_attr': {'class':'col-width-100'}})}}#}
+{#                        {{ form_widget(form.tipoIva)}}#}
+                        <label class="col-width-100 col-form-label col-sm-2 required lblIva" for="kontratua_lote_tipoIva">B.E.Z</label>
+                        <label class="col-width-100 col-form-label col-sm-2 required lblIva" for="kontratua_lote_tipoIva">21%</label>
+                    </div>
+                    <div class="col-5">
+                        {{ form_label(form.aurrekontuaIva, null, {'label_attr': {'class':'col-width-100'}})}}
+                        {{ form_widget(form.aurrekontuaIva)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card card-gray-dark">
+            <div class="card-header">
+                <h5 class="card-title m-0">Adjudikazioa</h5>
+            </div>
+            <div class="card-body">
+
+                <div class="mb-3 row">
+                    <div class="col-5">
+                        {{ form_label(form.adjudikazioaIvaGabe, null, {'label_attr': {'class':'col-width-100'}})}}
+                        {{ form_widget(form.adjudikazioaIvaGabe)}}
+                    </div>
+                    <div class="col-2">
+{#                        {{ form_label(form.tipoIva, null, {'label_attr': {'class':'col-width-100'}})}}#}
+{#                        {{ form_widget(form.tipoIva)}}#}
+                        <label class="col-width-100 col-form-label col-sm-2 required lblIva" for="kontratua_lote_tipoIva">B.E.Z</label>
+                        <label class="col-width-100 col-form-label col-sm-2 required lblIva" for="kontratua_lote_tipoIva">21%</label>
+                    </div>
+                    <div class="col-5">
+                        {{ form_label(form.adjudikazioaIva, null, {'label_attr': {'class':'col-width-100'}})}}
+                        {{ form_widget(form.adjudikazioaIva)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card card-gray-dark">
+            <div class="card-header">
+                <h5 class="card-title m-0">Prorrogak</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3 row">
+                    <div class="col-4">
+                        {{ form_label(form.prorroga1, null, {'label_attr': {'class':'col-sm-4'}})}}
+                        <div class="col-sm-8 input-group date">
+                            {{ form_widget(form.prorroga1)}}
+                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        {{ form_label(form.prorroga2, null, {'label_attr': {'class':'col-sm-4'}})}}
+                        <div class="col-sm-8 input-group date">
+                            {{ form_widget(form.prorroga2)}}
+                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4">
+                        {{ form_label(form.prorroga3, null, {'label_attr': {'class':'col-sm-4'}})}}
+                        <div class="col-sm-8 input-group date">
+                            {{ form_widget(form.prorroga3)}}
+                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="display: none;">
+    <button id="crudSubmitButton" class="btn">{{ button_label|default(' Save') }}</button>
+    {{ form_row(form.kontratua) }}
+</div>
+{{ form_end(form) }}

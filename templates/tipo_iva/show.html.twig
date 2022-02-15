@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TipoIva{% endblock %}
+
+{% block body %}
+    <h1>TipoIva</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tipo_iva.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ tipo_iva.name }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ tipo_iva.createdAt ? tipo_iva.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ tipo_iva.updatedAt ? tipo_iva.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('tipo_iva_index') }}">back to list</a>
+
+    <a href="{{ path('tipo_iva_edit', {'id': tipo_iva.id}) }}">edit</a>
+
+    {{ include('tipo_iva/_delete_form.html.twig') }}
+{% endblock %}

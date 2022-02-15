@@ -1,0 +1,55 @@
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-hover text-nowrap">
+                <thead>
+                <tr>
+                    <th>Lote</th>
+                    <th>Aurrekontua</th>
+                    <th>Adjudikazioa</th>
+                    <th>Sinadura</th>
+                    <th>Iraupena</th>
+                    <th>Amaitua</th>
+                    <th>Prorroga 1</th>
+                    <th>Prorroga 2</th>
+                    <th>Prorroga 3</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for kontratua_lote in kontratua_lotes %}
+                    <tr id="tr{{ kontratua_lote.id }}" data-loteid="{{ kontratua_lote.id }}" class="trSelect">
+                        <td>{{ kontratua_lote.name }}</td>
+                        <td class="text-right">{{ kontratua_lote.aurrekontuaIva | format_currency('EUR') }}</td>
+                        <td class="text-right">{{ kontratua_lote.adjudikazioaIva | format_currency('EUR')  }}</td>
+                        <td class="text-center">{{ kontratua_lote.sinadura ? kontratua_lote.sinadura|date('Y-m-d') : '' }}</td>
+                        <td class="text-center">{{ kontratua_lote.fetxaIraupena ? kontratua_lote.fetxaIraupena|date('Y-m-d') : '' }}</td>
+                        <td>{% if kontratua_lote.amaitua %}<span class="badge badge-success">Bai</span>{% else %}<span class="badge badge-danger">Ez</span>{% endif %}</td>
+                        <td class="text-center">{{ kontratua_lote.prorroga1 ? kontratua_lote.prorroga1|date('Y-m-d') : '' }}</td>
+                        <td class="text-center">{{ kontratua_lote.prorroga2 ? kontratua_lote.prorroga2|date('Y-m-d') : '' }}</td>
+                        <td class="text-center">{{ kontratua_lote.prorroga3 ? kontratua_lote.prorroga3|date('Y-m-d') : '' }}</td>
+                        <td class="text-center">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a data-id="{{ kontratua_lote.id }}" class="btnLoteEditInModal {% if loop.index=="1" %}firstLote{% endif %}" href="#"><i class="fas fa-edit"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    {{ include('kontratua_lote/_delete_form.html.twig') }}
+                                </li>
+                                <li class="list-inline-item">
+                                    {% if not kontratua_lote.notifications %}
+                                        <a href="{{ path('notification_new') }}" class="btn btn-primary">
+                                            <i class="fas fa-bell"></i>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+

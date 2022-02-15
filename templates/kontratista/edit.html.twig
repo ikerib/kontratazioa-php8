@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kontratistak{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path('kontratista_index') }}">Kontratistak</a></li>
+    <li class="breadcrumb-item active">{{ "Edit" | trans}}</li>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Kontratistak</h3>
+                <div class="card-tools">
+                    <a id="btnSaveButton" class="btn btn-outline-primary" href="#"><i class="fas fa-save"></i>&nbsp;{{ "Save" | trans}}</a>
+                </div>
+            </div>
+            <div class="card-body">
+
+                {{ include('kontratista/_form.html.twig') }}
+
+            </div>
+            <div class="card-footer"></div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

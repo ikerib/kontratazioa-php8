@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fitxategi Mota{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Fitxategi mota</li>
+    <li class="breadcrumb-item active">berria</li>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Fitxategi mota berria</h3>
+                    <div class="card-tools">
+                        <a class="btn" href="{{ path('fitxategi_mota_index') }}">{{ "back to list" | trans}}</a>
+                        <button id="btnSaveButton" class="btn btn-primary">Gorde</button>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    {{ include('fitxategi_mota/_form.html.twig') }}
+
+                </div>
+                <div class="card-footer">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
