@@ -19,32 +19,33 @@ class NotificationRepository extends ServiceEntityRepository
         parent::__construct($registry, Notification::class);
     }
 
-    // /**
-    //  * @return Notification[] Returns an array of Notification objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getByLote($loteid)
     {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $qm = $this->createQueryBuilder('n')
+            ->innerJoin('n.lote', 'l')
+            ->andWhere('l.id = :loteid')->setParameter('loteid', $loteid)
+            ->orderBy('n.noiz', 'DESC')
         ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Notification
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $qm->getQuery()->getResult();
     }
-    */
+
+    public function getAllNotifications()
+    {
+        $qb = $this->createQueryBuilder('n')
+            ->andWhere('n.notify=:value')->setParameter('value',1)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getAllUnEmailedNotifications()
+    {
+        $qb = $this->createQueryBuilder('n')
+            ->andWhere('n.notify=1')
+            ->andWhere('n.emailed=0')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
