@@ -4,13 +4,13 @@ services:
         container_name: kontratazio_db
         image: postgres:${POSTGRES_VERSION:-13}-alpine
         environment:
-            POSTGRES_DB: ${POSTGRES_DB:-app}
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
-            POSTGRES_USER: ${POSTGRES_USER:-symfony}
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_USER: ${POSTGRES_USER}
         ports:
             - "5432:5432"
         volumes:
-            - db:/var/lib/postgresql/data:rw
+            - kontratazioa8_db:/var/lib/postgresql/data:rw
 
     app:
         container_name: kontratazio_app
@@ -59,11 +59,11 @@ services:
         ports:
             - "6380:637"
         volumes:
-            - redis:/data
+            - kontratazioa8_redis:/data
 
 volumes:
-    db:
-    redis:
+    kontratazioa8_db:
+    kontratazioa8_redis:
 
 networks:
     default:

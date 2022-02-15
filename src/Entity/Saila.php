@@ -26,9 +26,13 @@ class Saila
     #[ORM\OneToMany(mappedBy: 'saila', targetEntity: Kontaktuak::class)]
     private $kontaktuak;
 
+    #[ORM\OneToMany(mappedBy: 'saila', targetEntity: Kontratua::class)]
+    private $kontratuak;
+
     public function __construct()
     {
         $this->kontaktuak = new ArrayCollection();
+        $this->kontratuak = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,6 +76,36 @@ class Saila
             // set the owning side to null (unless already changed)
             if ($kontaktuak->getSaila() === $this) {
                 $kontaktuak->setSaila(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Kontratua[]
+     */
+    public function getKontratuak(): Collection
+    {
+        return $this->kontratuak;
+    }
+
+    public function addKontratuak(Kontratua $kontratuak): self
+    {
+        if (!$this->kontratuak->contains($kontratuak)) {
+            $this->kontratuak[] = $kontratuak;
+            $kontratuak->setSaila($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKontratuak(Kontratua $kontratuak): self
+    {
+        if ($this->kontratuak->removeElement($kontratuak)) {
+            // set the owning side to null (unless already changed)
+            if ($kontratuak->getSaila() === $this) {
+                $kontratuak->setSaila(null);
             }
         }
 

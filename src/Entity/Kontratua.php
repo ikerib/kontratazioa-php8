@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: KontratuaRepository::class)]
 class Kontratua
@@ -16,31 +17,25 @@ class Kontratua
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $espedientea;
+    private ?string $espedientea;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $izena_eus;
+    private ?string $izena_eus;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $izena_es;
+    private ?string $izena_es;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private $oharrak;
+    private ?string $oharrak;
 
     #[ORM\Column(type: 'string', length: 12, nullable: true)]
-    private $espedienteElektronikoa;
+    private ?string $espedienteElektronikoa;
 
-    #[ORM\ManyToOne(targetEntity: Arduraduna::class, inversedBy: 'kontratua')]
-    private $arduraduna;
-
-    #[ORM\ManyToOne(targetEntity: Egoera::class, inversedBy: 'kontratua')]
-    private $egoera;
-
-    #[ORM\OneToMany(mappedBy: 'kontratua', targetEntity: Fitxategia::class)]
-    private $fitxategiak;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $artxiboa;
 
     /******************************************************************************************************************/
     /******************************************************************************************************************/
@@ -51,11 +46,32 @@ class Kontratua
         return '' . $this->espedientea . '-' . '' . $this->izena_eus;
     }
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->lotes = new ArrayCollection();
         $this->fitxategiak = new ArrayCollection();
     }
+
+    #[ORM\ManyToOne(targetEntity: Arduraduna::class, inversedBy: 'kontratua')]
+    private ?Arduraduna $arduraduna;
+
+    #[ORM\ManyToOne(targetEntity: Egoera::class, inversedBy: 'kontratua')]
+    private ?Egoera $egoera;
+
+    #[ORM\OneToMany(mappedBy: 'kontratua', targetEntity: Fitxategia::class)]
+    private ArrayCollection $fitxategiak;
+
+    #[ORM\ManyToOne(targetEntity: Mota::class, inversedBy: 'kontratuak')]
+    private ?Mota $mota;
+
+    #[ORM\ManyToOne(targetEntity: Prozedura::class, inversedBy: 'kontratuak')]
+    private ?Prozedura $prozedura;
+
+    #[ORM\ManyToOne(targetEntity: Saila::class, inversedBy: 'kontratuak')]
+    private ?Saila $saila;
+
+    #[ORM\OneToMany(mappedBy: 'kontratua', targetEntity: KontratuaLote::class)]
+    private ArrayCollection $lotes;
 
     /******************************************************************************************************************/
     /******************************************************************************************************************/
@@ -153,7 +169,7 @@ class Kontratua
     /**
      * @return Collection|Fitxategia[]
      */
-    public function getFitxategiak(): Collection
+    public function getFitxategiak(): array|Collection
     {
         return $this->fitxategiak;
     }
@@ -176,6 +192,84 @@ class Kontratua
                 $fitxategiak->setKontratua(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMota(): ?Mota
+    {
+        return $this->mota;
+    }
+
+    public function setMota(?Mota $mota): self
+    {
+        $this->mota = $mota;
+
+        return $this;
+    }
+
+    public function getProzedura(): ?Prozedura
+    {
+        return $this->prozedura;
+    }
+
+    public function setProzedura(?Prozedura $prozedura): self
+    {
+        $this->prozedura = $prozedura;
+
+        return $this;
+    }
+
+    public function getSaila(): ?Saila
+    {
+        return $this->saila;
+    }
+
+    public function setSaila(?Saila $saila): self
+    {
+        $this->saila = $saila;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|KontratuaLote[]
+     */
+    public function getLotes(): Collection|array
+    {
+        return $this->lotes;
+    }
+
+    public function addLote(KontratuaLote $lote): self
+    {
+        if (!$this->lotes->contains($lote)) {
+            $this->lotes[] = $lote;
+            $lote->setKontratua($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLote(KontratuaLote $lote): self
+    {
+        if ($this->lotes->removeElement($lote)) {
+            // set the owning side to null (unless already changed)
+            if ($lote->getKontratua() === $this) {
+                $lote->setKontratua(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getArtxiboa(): ?string
+    {
+        return $this->artxiboa;
+    }
+
+    public function setArtxiboa(?string $artxiboa): self
+    {
+        $this->artxiboa = $artxiboa;
 
         return $this;
     }
