@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\KontratuaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -37,6 +38,9 @@ class Kontratua
 
     #[ORM\ManyToOne(targetEntity: Egoera::class, inversedBy: 'kontratua')]
     private $egoera;
+
+    #[ORM\OneToMany(mappedBy: 'kontratua', targetEntity: Fitxategia::class)]
+    private $fitxategiak;
 
     /******************************************************************************************************************/
     /******************************************************************************************************************/
@@ -142,6 +146,36 @@ class Kontratua
     public function setEgoera(?Egoera $egoera): self
     {
         $this->egoera = $egoera;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Fitxategia[]
+     */
+    public function getFitxategiak(): Collection
+    {
+        return $this->fitxategiak;
+    }
+
+    public function addFitxategiak(Fitxategia $fitxategiak): self
+    {
+        if (!$this->fitxategiak->contains($fitxategiak)) {
+            $this->fitxategiak[] = $fitxategiak;
+            $fitxategiak->setKontratua($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFitxategiak(Fitxategia $fitxategiak): self
+    {
+        if ($this->fitxategiak->removeElement($fitxategiak)) {
+            // set the owning side to null (unless already changed)
+            if ($fitxategiak->getKontratua() === $this) {
+                $fitxategiak->setKontratua(null);
+            }
+        }
 
         return $this;
     }
