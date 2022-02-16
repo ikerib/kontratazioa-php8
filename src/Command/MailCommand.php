@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
 #[AsCommand(
@@ -17,6 +18,18 @@ use Symfony\Component\Mime\Email;
 )]
 class MailCommand extends Command
 {
+    protected static $defaultName = 'app:mail';
+    protected static $defaultDescription = 'Add a short description for your command';
+
+    private MailerInterface $mailer;
+
+    public function __construct(MailerInterface $mailer)
+    {
+        $this->mailer = $mailer;
+
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this

@@ -42,8 +42,8 @@ class NotificationRepository extends ServiceEntityRepository
     public function getAllUnEmailedNotifications()
     {
         $qb = $this->createQueryBuilder('n')
-            ->andWhere('n.notify=1')
-            ->andWhere('n.emailed=0')
+            ->andWhere('n.notify=:notify')->setParameter('notify',1)
+            ->andWhere('n.emailed=:emailed')->setParameter('emailed',0)
         ;
 
         return $qb->getQuery()->getResult();

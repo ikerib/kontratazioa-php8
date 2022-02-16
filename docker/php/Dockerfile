@@ -49,6 +49,17 @@ RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 #
 
+# ldap
+RUN apk add --update --no-cache \
+          libldap && \
+      # Build dependancy for ldap \
+      apk add --update --no-cache --virtual .docker-php-ldap-dependancies \
+          openldap-dev && \
+      docker-php-ext-configure ldap && \
+      docker-php-ext-install ldap && \
+      apk del .docker-php-ldap-dependancies && \
+      php -m;
+
 RUN pecl install -o -f redis apcu  \
 &&  rm -rf /tmp/pear \
 &&  docker-php-ext-enable redis apcu

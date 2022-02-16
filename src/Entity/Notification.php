@@ -33,7 +33,7 @@ class Notification
     private $notify=1;
 
     #[ORM\Column(type: 'boolean')]
-    private $emailed;
+    private $emailed=0;
 
     /******************************************************************************************************************/
     /******************************************************************************************************************/
@@ -43,8 +43,8 @@ class Notification
     #[Groups(['notification:write'])]
     private $lote;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'notification')]
-    #[Groups(['notification:write'])]
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'notification')]
+//    #[Groups(['notification:write'])]
     private $usuario;
 
     /******************************************************************************************************************/

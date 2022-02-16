@@ -73,6 +73,9 @@ class User implements UserInterface
     #[ORM\Column(type: 'json', nullable: true)]
     private $ldapRolak = [];
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $password;
+
     /******************************************************************************************************************/
     /******************************************************************************************************************/
     /******************************************************************************************************************/
@@ -89,6 +92,8 @@ class User implements UserInterface
 
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Notification::class)]
     private $notification;
+
+
 
 
     /******************************************************************************************************************/
@@ -356,6 +361,18 @@ class User implements UserInterface
                 $notification->setUsuario(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }

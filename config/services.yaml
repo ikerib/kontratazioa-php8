@@ -27,3 +27,31 @@ services:
         class: App\Utils\VichDirectoryNamer
         arguments: ['%kernel.project_dir%', 'kontratuid']
         public: true
+
+    Redis:
+        # también puedes usar las clases \RedisArray, \RedisCluster o \Predis\Client
+        class: Redis
+        calls:
+            - connect:
+                  - '%env(REDIS_HOST)%'
+                  - '%env(int:REDIS_PORT)%'
+            # Si tu servidor Redis requiere una contraseña, elimine el comentario de las siguientes líneas:
+            # - auth:
+            #     - '%env(REDIS_PASSWORD)%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
+
+    App\Security\PasaiaLdapService:
+        class: App\Security\PasaiaLdapService
+        autoconfigure: true
+        arguments:
+            - "%env(resolve:LDAP_IP)%"
+            - "%env(resolve:LDAP_SEARCH_DN)%"
+            - "%env(resolve:LDAP_BASE_DN)%"
+            - "%env(resolve:LDAP_PASSWD)%"
+            - "%env(resolve:LDAP_ADMIN_TALDEAK)%"
+            - "%env(resolve:LDAP_KUDEATU_TALDEAK)%"
+            - "%env(resolve:LDAP_USER_TALDEA)%"
+            - '@Doctrine\ORM\EntityManagerInterface'
