@@ -9,17 +9,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MotaType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name_eus')
+            ->add('mota_eus')
             ->add('mota_es')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Mota::class,

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: MotaRepository::class)]
 #[ApiResource]
@@ -18,20 +19,50 @@ class Mota
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name_eus;
+    private ?string $mota_eus;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $mota_es;
+    private ?string $mota_es;
+
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+
+    #[Pure] public function __construct()
+    {
+        $this->kontratuak = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string)$this->mota_eus;
+    }
 
     #[ORM\OneToMany(mappedBy: 'mota', targetEntity: Kontratua::class)]
     private $kontratuak;
 
-    public function __construct()
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+
+    public function getId(): ?int
     {
-        $this->kontratuak = new ArrayCollection();
+        return $this->id;
+    }
+
+    public function getMotaEus(): ?string
+    {
+        return $this->mota_eus;
+    }
+
+    public function setMotaEus(string $mota_eus): self
+    {
+        $this->mota_eus = $mota_eus;
+
+        return $this;
     }
 
     public function getMotaEs(): ?string
@@ -75,6 +106,7 @@ class Mota
 
         return $this;
     }
+
 
 
 }

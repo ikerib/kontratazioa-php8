@@ -9,17 +9,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class KontratistaType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('izena_eus')
-            ->add('izena_es')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Kontratista::class,

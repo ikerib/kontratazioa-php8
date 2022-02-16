@@ -14,6 +14,7 @@ WORKDIR /usr/src/app
 # 3 Install Additional dependencies
 RUN apk update && apk add --no-cache \
     build-base shadow vim curl bash \
+    zip libzip-dev \
     php8 \
     php8-fpm \
     php8-common \
@@ -35,12 +36,13 @@ RUN apk update && apk add --no-cache \
     autoconf
 
 # 4 Add and Enable PHP-PDO Extenstions
-RUN docker-php-ext-install pdo pdo_mysql mysqli 
+RUN docker-php-ext-install pdo pdo_mysql mysqli
 RUN docker-php-ext-enable pdo_mysql opcache
-RUN docker-php-ext-install pdo_pgsql 
-RUN docker-php-ext-install pgsql 
-RUN docker-php-ext-install pspell 
+RUN docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install pgsql
+RUN docker-php-ext-install pspell
 RUN docker-php-ext-enable pdo_pgsql pgsql pspell
+RUN docker-php-ext-install zip
 
 # xdebug extensions
 RUN pecl install xdebug

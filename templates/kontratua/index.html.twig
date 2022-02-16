@@ -46,7 +46,7 @@
                             <th>{{ "Mota" | trans }}</th>
                             <th>{{ "Sinadura" | trans}}</th>
                             <th>{{ "Iraupena" | trans}}</th>
-                            <th>{{ "Amaitua" | trans}}</th>
+                            <th>{{ "Egoera" | trans}}</th>
                             <th>{{ "Luzapena" | trans}}</th>
                             <th>{{ "actions" | trans}}</th>
                         </tr>
@@ -61,7 +61,8 @@
                             <td>{{ lote.kontratua.mota }}</td>
                             <td class="text-center">{{ lote.sinadura ? lote.sinadura|date('Y-m-d') : '' }}</td>
                             <td>{{ lote.iraupena }}</td>
-                            <td>{% if lote.amaitua %}<span class="badge badge-success">Bai</span>{% else %}<span class="badge badge-danger">Ez</span>{% endif %}</td>
+{#                            <td>{% if lote.amaitua %}<span class="badge badge-success">Bai</span>{% else %}<span class="badge badge-danger">Ez</span>{% endif %}</td>#}
+                            <td>TODO</td>
                             <td>{{ lote.luzapena }}</td>
                             <td class="text-center">
                                 <a href="{{ path('kontratua_edit', {'id': lote.kontratua.id}) }}"><i class="fas fa-edit"></i></a>

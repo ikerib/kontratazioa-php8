@@ -59,7 +59,7 @@ class Kontratua
     private ?Egoera $egoera;
 
     #[ORM\OneToMany(mappedBy: 'kontratua', targetEntity: Fitxategia::class)]
-    private ArrayCollection $fitxategiak;
+    private $fitxategiak;
 
     #[ORM\ManyToOne(targetEntity: Mota::class, inversedBy: 'kontratuak')]
     private ?Mota $mota;
@@ -71,7 +71,7 @@ class Kontratua
     private ?Saila $saila;
 
     #[ORM\OneToMany(mappedBy: 'kontratua', targetEntity: KontratuaLote::class)]
-    private ArrayCollection $lotes;
+    private $lotes;
 
     /******************************************************************************************************************/
     /******************************************************************************************************************/

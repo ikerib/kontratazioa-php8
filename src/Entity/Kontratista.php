@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\KontratistaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: KontratistaRepository::class)]
 #[ApiResource]
@@ -16,13 +19,34 @@ class Kontratista
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $izena_eus;
+    private ?string $izena_eus;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $izena_es;
+    private ?string $izena_es;
+
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+
+    #[Pure] public function __construct()
+    {
+        $this->lote = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string)$this->izena_eus;
+    }
+
+    #[ORM\OneToMany(mappedBy: 'kontratista', targetEntity: KontratuaLote::class)]
+    private $lote;
+
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
 
     public function getId(): ?int
     {
@@ -49,6 +73,36 @@ class Kontratista
     public function setIzenaEs(?string $izena_es): self
     {
         $this->izena_es = $izena_es;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|KontratuaLote[]
+     */
+    public function getLote(): Collection
+    {
+        return $this->lote;
+    }
+
+    public function addLote(KontratuaLote $lote): self
+    {
+        if (!$this->lote->contains($lote)) {
+            $this->lote[] = $lote;
+            $lote->setKontratista($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLote(KontratuaLote $lote): self
+    {
+        if ($this->lote->removeElement($lote)) {
+            // set the owning side to null (unless already changed)
+            if ($lote->getKontratista() === $this) {
+                $lote->setKontratista(null);
+            }
+        }
 
         return $this;
     }

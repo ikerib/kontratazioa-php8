@@ -48,8 +48,20 @@ class KontratuaLote
     #[ORM\Column(type: 'string', length: 255)]
     private $luzapena;
 
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+
     #[ORM\ManyToOne(targetEntity: Kontratua::class, inversedBy: 'lotes')]
     private $kontratua;
+
+    #[ORM\ManyToOne(targetEntity: Kontratista::class, inversedBy: 'lote')]
+    private $kontratista;
+
+
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
 
     public function getId(): ?int
     {
@@ -184,6 +196,18 @@ class KontratuaLote
     public function setKontratua(?Kontratua $kontratua): self
     {
         $this->kontratua = $kontratua;
+
+        return $this;
+    }
+
+    public function getKontratista(): ?Kontratista
+    {
+        return $this->kontratista;
+    }
+
+    public function setKontratista(?Kontratista $kontratista): self
+    {
+        $this->kontratista = $kontratista;
 
         return $this;
     }

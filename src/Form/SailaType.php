@@ -9,16 +9,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SailaType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('izena')
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Saila::class,

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: SailaRepository::class)]
 #[ApiResource]
@@ -18,10 +19,25 @@ class Saila
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private ?string $izena;
+
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+
+    #[Pure] public function __construct()
+    {
+        $this->kontaktuak = new ArrayCollection();
+        $this->kontratuak = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string)$this->izena;
+    }
 
     #[ORM\OneToMany(mappedBy: 'saila', targetEntity: Kontaktuak::class)]
     private $kontaktuak;
@@ -29,25 +45,23 @@ class Saila
     #[ORM\OneToMany(mappedBy: 'saila', targetEntity: Kontratua::class)]
     private $kontratuak;
 
-    public function __construct()
-    {
-        $this->kontaktuak = new ArrayCollection();
-        $this->kontratuak = new ArrayCollection();
-    }
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getIzena(): ?string
     {
-        return $this->name;
+        return $this->izena;
     }
 
-    public function setName(string $name): self
+    public function setIzena(string $izena): self
     {
-        $this->name = $name;
+        $this->izena = $izena;
 
         return $this;
     }
@@ -111,4 +125,6 @@ class Saila
 
         return $this;
     }
+
+
 }

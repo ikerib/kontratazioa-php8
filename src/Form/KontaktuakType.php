@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Kontaktuak;
+use App\Entity\Saila;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,9 +16,11 @@ class KontaktuakType extends AbstractType
         $builder
             ->add('name')
             ->add('email')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('saila')
+            ->add('saila', EntityType::class, [
+                'attr' => ['class' => 'form-control select2'],
+                'class' => Saila::class,
+                'placeholder' => 'Aukeratu bat'
+            ])
         ;
     }
 
