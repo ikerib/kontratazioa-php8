@@ -15,6 +15,7 @@ WORKDIR /usr/src/app
 RUN apk update && apk add --no-cache \
     build-base shadow vim curl bash \
     zip libzip-dev \
+    git \
     php8 \
     php8-fpm \
     php8-common \
