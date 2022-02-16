@@ -20,12 +20,12 @@ class NotificationType extends AbstractType
                 'attr' => ['class' => 'form-control select2'],
                 'class' => User::class,
                 'label' => 'Nori',
-                'placeholder' => 'Aukeratu bat'
+//                'placeholder' => 'Aukeratu bat'
             ])
             ->add('lote', EntityType::class, [
                 'attr' => ['class' => 'form-control select2'],
                 'class' => KontratuaLote::class,
-                'placeholder' => 'Aukeratu bat'
+//                'placeholder' => 'Aukeratu bat'
             ])
             ->add('noiz', DateType::class, [
                 'widget' => 'single_text',

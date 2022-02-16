@@ -113,7 +113,7 @@ class KontratuaLoteType extends AbstractType
             ->add('kontratista', EntityType::class, [
                 'class' => Kontratista::class,
                 'attr' => ['class' => 'form-control select2'],
-                'placeholder' => 'Aukeratu bat'
+//                'placeholder' => 'Aukeratu bat'
             ])
             ->add('tipoIva', EntityType::class, [
                 'label' => 'B.E.Z',

@@ -6,9 +6,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\KontaktuakRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: KontaktuakRepository::class)]
-#[ApiResource]
+#[ApiResource (
+    collectionOperations: ['get'],
+    itemOperations: ['get'],
+    normalizationContext: ['groups' => ['kontaktua:read']]
+)]
 class Kontaktuak
 {
     Use TimestampableEntity;
@@ -16,12 +21,15 @@ class Kontaktuak
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['kontaktua:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['kontaktua:read'])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['kontaktua:read'])]
     private $email;
 
     #[ORM\ManyToOne(targetEntity: Saila::class, inversedBy: 'kontaktuak')]

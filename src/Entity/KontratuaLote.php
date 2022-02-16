@@ -3,12 +3,21 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\KontratuaLoteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: KontratuaLoteRepository::class)]
-#[ApiResource]
+#[ApiResource (
+    collectionOperations: ['get'],
+    itemOperations: ['get'],
+    shortName: 'lote',
+    normalizationContext: ['groups' => ['lote:read']]
+)]
 class KontratuaLote
 {
     Use TimestampableEntity;
@@ -16,12 +25,15 @@ class KontratuaLote
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['lote:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['lote:read'])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['lote:read'])]
     private $zenbatekoarenUnitatea;
 
     #[ORM\Column(type: 'float', nullable: true)]
@@ -57,6 +69,24 @@ class KontratuaLote
 
     #[ORM\ManyToOne(targetEntity: Kontratista::class, inversedBy: 'lote')]
     private $kontratista;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $prorroga1;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $prorroga2;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $prorroga3;
+
+    #[ORM\OneToMany(mappedBy: 'lote', targetEntity: Notification::class)]
+    #[ApiSubresource]
+    private $notifications;
+
+    public function __construct()
+    {
+        $this->notifications = new ArrayCollection();
+    }
 
 
     /******************************************************************************************************************/
@@ -208,6 +238,72 @@ class KontratuaLote
     public function setKontratista(?Kontratista $kontratista): self
     {
         $this->kontratista = $kontratista;
+
+        return $this;
+    }
+
+    public function getProrroga1(): ?\DateTimeInterface
+    {
+        return $this->prorroga1;
+    }
+
+    public function setProrroga1(?\DateTimeInterface $prorroga1): self
+    {
+        $this->prorroga1 = $prorroga1;
+
+        return $this;
+    }
+
+    public function getProrroga2(): ?\DateTimeInterface
+    {
+        return $this->prorroga2;
+    }
+
+    public function setProrroga2(?\DateTimeInterface $prorroga2): self
+    {
+        $this->prorroga2 = $prorroga2;
+
+        return $this;
+    }
+
+    public function getProrroga3(): ?\DateTimeInterface
+    {
+        return $this->prorroga3;
+    }
+
+    public function setProrroga3(?\DateTimeInterface $prorroga3): self
+    {
+        $this->prorroga3 = $prorroga3;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setLote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getLote() === $this) {
+                $notification->setLote(null);
+            }
+        }
 
         return $this;
     }

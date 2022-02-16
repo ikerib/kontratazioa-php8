@@ -37,7 +37,7 @@ export default {
         showTodayButton: true,
         locale: 'eu'
       },
-      user: null,
+      usuario: null,
       aaa: null,
       noiz: null,
       notify: 1
@@ -55,7 +55,7 @@ export default {
       } else {
         let data = {
           noiz: this.date,
-          user: "/api/users/" + this.user,
+          usuario: "/api/users/" + this.usuario,
           lote: "/api/lotes/" + this.$store.state.selectedRow,
           notify: true
         };
@@ -71,7 +71,7 @@ export default {
   },
   mounted() {
     if (window.user) {
-      this.user = window.user;
+      this.usuario = window.user;
     }
   }
 };

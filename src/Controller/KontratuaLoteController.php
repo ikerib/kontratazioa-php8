@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Kontratua;
 use App\Entity\KontratuaLote;
 use App\Form\KontratuaLoteType;
 use App\Repository\KontratuaLoteRepository;
@@ -22,21 +23,25 @@ class KontratuaLoteController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'kontratua_lote_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{kontratuid}', name: 'kontratua_lote_new', options: ['expose' => true],methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, $kontratuid): Response
     {
+        $kontratua = $entityManager->getRepository(Kontratua::class)->find($kontratuid);
         $kontratuaLote = new KontratuaLote();
-        $form = $this->createForm(KontratuaLoteType::class, $kontratuaLote);
+        $kontratuaLote->setKontratua($kontratua);
+        $form = $this->createForm(KontratuaLoteType::class, $kontratuaLote, [
+            'action' => $this->generateUrl('kontratua_lote_new', ['kontratuid' => $kontratuid])
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($kontratuaLote);
             $entityManager->flush();
 
-            return $this->redirectToRoute('kontratua_lote_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('kontratua_edit', [ 'id' => $kontratuaLote->getKontratua()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('kontratua_lote/new.html.twig', [
+        return $this->renderForm('kontratua_lote/_form.html.twig', [
             'kontratua_lote' => $kontratuaLote,
             'form' => $form,
         ]);
@@ -50,19 +55,21 @@ class KontratuaLoteController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'kontratua_lote_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'kontratua_lote_edit', options: ['expose'=>true],methods: ['GET', 'POST'])]
     public function edit(Request $request, KontratuaLote $kontratuaLote, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(KontratuaLoteType::class, $kontratuaLote);
+        $form = $this->createForm(KontratuaLoteType::class, $kontratuaLote, [
+            'action' => $this->generateUrl('kontratua_lote_edit', ['id' => $kontratuaLote->getId()])
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('kontratua_lote_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('kontratua_edit', ['id' => $kontratuaLote->getKontratua()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('kontratua_lote/edit.html.twig', [
+        return $this->renderForm('kontratua_lote/_form.html.twig', [
             'kontratua_lote' => $kontratuaLote,
             'form' => $form,
         ]);

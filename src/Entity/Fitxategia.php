@@ -20,15 +20,15 @@ class Fitxategia
     private ?int $id=null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private ?string $name;
 
     #[Vich\UploadableField(mapping: 'uploads', fileNameProperty: 'fileName', size: 'fileSize')]
-    private ?File $imageFile = null;
+    private ?File $uploadFile = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $fileName = null;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $fileSize = null;
 
     /******************************************************************************************************************/
@@ -42,9 +42,9 @@ class Fitxategia
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     * @param File|null $uploadFile
      */
-    public function setImageFile(?File $uploadFile = null): void
+    public function setUploadFile(?File $uploadFile = null): void
     {
         $this->uploadFile = $uploadFile;
 
@@ -87,6 +87,29 @@ class Fitxategia
         return $this;
     }
 
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    public function setFileName(?string $fileName): self
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    public function getFileSize(): ?int
+    {
+        return $this->fileSize;
+    }
+
+    public function setFileSize(?int $fileSize): self
+    {
+        $this->fileSize = $fileSize;
+
+        return $this;
+    }
 
     public function getFitxategiMota(): ?FitxategiMota
     {
@@ -112,27 +135,4 @@ class Fitxategia
         return $this;
     }
 
-    public function getFileName(): ?string
-    {
-        return $this->fileName;
-    }
-
-    public function setFileName(string $fileName): self
-    {
-        $this->fileName = $fileName;
-
-        return $this;
-    }
-
-    public function getFileSize(): ?int
-    {
-        return $this->fileSize;
-    }
-
-    public function setFileSize(int $fileSize): self
-    {
-        $this->fileSize = $fileSize;
-
-        return $this;
-    }
 }

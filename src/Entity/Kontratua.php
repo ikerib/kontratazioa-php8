@@ -2,14 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\KontratuaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: KontratuaRepository::class)]
+#[ApiResource (
+    collectionOperations: ['get'],
+    itemOperations: ['get'],
+    shortName: 'kontratua',
+    normalizationContext: ['groups' => ['kontratua:read']]
+)]
 class Kontratua
 {
     Use TimestampableEntity;
@@ -17,15 +25,19 @@ class Kontratua
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['kontratua:read'])]
     private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['kontratua:read'])]
     private ?string $espedientea;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['kontratua:read'])]
     private ?string $izena_eus;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['kontratua:read'])]
     private ?string $izena_es;
 
     #[ORM\Column(type: 'text', nullable: true)]

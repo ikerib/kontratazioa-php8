@@ -21,7 +21,7 @@ class FitxategiaType extends AbstractType
             ->add('fitxategimota', null, [
                 'label' => 'Fitxategi Mota',
                 'attr' => ['class' => 'form-control select2'],
-                'placeholder' => 'Aukeratu bat',
+//                'placeholder' => 'Aukeratu bat',
                 'required' => true
             ])
             ->add('uploadFile', VichFileType::class, [

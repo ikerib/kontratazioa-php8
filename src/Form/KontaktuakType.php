@@ -19,7 +19,7 @@ class KontaktuakType extends AbstractType
             ->add('saila', EntityType::class, [
                 'attr' => ['class' => 'form-control select2'],
                 'class' => Saila::class,
-                'placeholder' => 'Aukeratu bat'
+//                'placeholder' => 'Aukeratu bat'
             ])
         ;
     }

@@ -44,7 +44,7 @@ export default {
         showTodayButton: true,
         locale: 'eu'
       },
-      user: null,
+      usuario: null,
       aaa: null,
       noiz: null
     };
@@ -54,7 +54,7 @@ export default {
       let data = {
         id: this.notification_id,
         noiz: this.date,
-        user: "/api/users/" + this.user,
+        usuario: "/api/users/" + this.usuario,
         lote: "/api/lotes/" + this.$store.state.selectedRow
       };
       this.putNotification(data);
@@ -65,7 +65,7 @@ export default {
   },
   mounted() {
     if (window.user) {
-      this.user = window.user;
+      this.usuario = window.user;
     }
     this.notification_id = this.$route.params.id;
     this.notification = this.$store.getters.getNotifyById(this.$route.params.id);
