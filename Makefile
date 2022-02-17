@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP = kontratazioa
+APP = kontratazioa_php_8
 VERSION := $(shell cat ./VERSION)
 DOCKER_REPO_NGINX = ikerib/${APP}_nginx:${VERSION}
 DOCKER_REPO_APP = ikerib/${APP}_app:${VERSION}
@@ -42,7 +42,7 @@ build:
 	@echo '----------------------------------------------------------------------'
 	cp -r ~/docker_temp/app ./docker_temp/
 	#mv ./docker_temp/docker_temp ./docker_temp/app
-	docker build --force-rm -t ${DOCKER_REPO_APP} --file=docker/prod/php/Dockerfile .
+	docker build --force-rm -t ${DOCKER_REPO_APP} --file=docker/php/Dockerfile .
 	rm -fr ./docker_temp/
 	@echo
 	@echo
@@ -58,9 +58,9 @@ deploy: build
 	#	ARG GROUP_ID=1000
 	#	ARG DOCKER_TIMEZONE=Europe/Madrid
 
-	docker build -t ${DOCKER_REPO_APP} --file=docker/prod/php/Dockerfile .
+	docker build -t ${DOCKER_REPO_APP} --file=docker/php/Dockerfile .
 
-	docker build --force-rm -t ${DOCKER_REPO_NGINX} --file=docker/prod/nginx/Dockerfile .
+	docker build --force-rm -t ${DOCKER_REPO_NGINX} --file=docker/nginx/Dockerfile .
 	docker push ${DOCKER_REPO_NGINX}
 	docker push ${DOCKER_REPO_APP}
 

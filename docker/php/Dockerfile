@@ -78,6 +78,7 @@ RUN usermod -u ${USER_ID} www-data
 COPY --chown=www-data:www-data . /usr/src/app
 
 # 9 Change current user to www
+RUN chown -R www-data:www-data /var/www
 USER www-data
 
 # 10 Expose port 9000 and start php-fpm server
