@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -51,8 +52,14 @@ class MailCommand extends Command
                         <p>Kontratua: Hau eta hori</p>
                         <p>Lotea: Lote hura</p>
                     ");
+        try {
+            $this->mailer->send($email);
 
-        $this->mailer->send($email);
+        } catch (TransportExceptionInterface $e)
+        {
+            $io->error($e->getMessage());
+        }
+
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 

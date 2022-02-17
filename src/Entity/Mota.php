@@ -27,10 +27,13 @@ class Mota
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $mota_es;
 
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
+###< symfony/framework-bundle ###
 
+###> doctrine/doctrine-bundle ###
+# Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+# IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
+#
+# DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
     #[Pure] public function __construct()
     {
         $this->kontratuak = new ArrayCollection();
