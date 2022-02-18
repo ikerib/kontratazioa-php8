@@ -69,8 +69,6 @@ RUN pecl install -o -f redis apcu  \
 # 5 Install PHP Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-
-
 # 6 Remove Cache
 RUN rm -rf /var/cache/apk/*
 
@@ -80,7 +78,9 @@ RUN usermod -u ${USER_ID} www-data
 # 8 Copy existing application directory permissions
 COPY --chown=www-data:www-data . /usr/src/app
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-scripts --prefer-dist --no-interaction --optimize-autoloader
+
+RUN php bin/console cache:clear
 
 RUN chown -R www-data:www-data /usr/src/app
 
