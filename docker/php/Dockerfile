@@ -80,7 +80,7 @@ RUN usermod -u ${USER_ID} www-data
 # 8 Copy existing application directory permissions
 COPY --chown=www-data:www-data . /usr/src/app
 
-RUN RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader
 
 RUN chown -R www-data:www-data /usr/src/app
 
