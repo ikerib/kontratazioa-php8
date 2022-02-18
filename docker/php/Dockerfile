@@ -93,6 +93,7 @@ USER www-data
 
 RUN yarn install
 RUN yarn encore prod
+RUN php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.jso
 
 # 10 Expose port 9000 and start php-fpm server
 EXPOSE 9000
