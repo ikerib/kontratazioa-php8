@@ -65,6 +65,8 @@ RUN pecl install -o -f redis apcu  \
 &&  rm -rf /tmp/pear \
 &&  docker-php-ext-enable redis apcu
 
+RUN apk --no-cache add nodejs yarn --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+
 
 # 5 Install PHP Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -82,11 +84,14 @@ RUN composer install --no-scripts --prefer-dist --no-interaction --optimize-auto
 
 RUN php bin/console cache:clear
 
+
 RUN chown -R www-data:www-data /usr/src/app
 
 # 9 Change current user to www
 USER www-data
 
+RUN yarn install
+RUN yarn encore prod
 
 # 10 Expose port 9000 and start php-fpm server
 EXPOSE 9000
