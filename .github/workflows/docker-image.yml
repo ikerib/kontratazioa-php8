@@ -23,7 +23,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     
     - name: Build the Docker image APP
-      run: docker build . --file docker/php/Dockerfile --tag kontratazioa_ci:$(date +%s)
+      run: docker build . --file docker/php/Dockerfile --tag ikerib/kontratazioa_ci
       
     - name: Docker Push
-      run: docker push kontratazioa_ci
+      run: docker push ikerib/kontratazioa_ci
