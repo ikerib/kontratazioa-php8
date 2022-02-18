@@ -80,6 +80,8 @@ USER www-data
 # 8 Copy existing application directory permissions
 COPY --chown=www-data:www-data . /usr/src/app
 
+RUN mkdir vendor
+run mkdir var
 RUN composer install --no-dev --optimize-autoloader
 
 # 10 Expose port 9000 and start php-fpm server
