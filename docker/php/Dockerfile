@@ -74,11 +74,13 @@ RUN rm -rf /var/cache/apk/*
 # 7 Add UID '1000' to www-data
 RUN usermod -u ${USER_ID} www-data
 
+# 9 Change current user to www
+USER www-data
+
 # 8 Copy existing application directory permissions
 COPY --chown=www-data:www-data . /usr/src/app
 
-# 9 Change current user to www
-USER www-data
+RUN composer install --no-dev --optimize-autoloader
 
 # 10 Expose port 9000 and start php-fpm server
 EXPOSE 9000

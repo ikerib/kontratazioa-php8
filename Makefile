@@ -42,6 +42,7 @@ build:
 	@echo '----------------------------------------------------------------------'
 	cp -r ~/docker_temp/app ./docker_temp/
 	#mv ./docker_temp/docker_temp ./docker_temp/app
+#	docker build --force-rm -t ${DOCKER_REPO_APP} --file=docker/php/Dockerfile .
 	docker build -t ${DOCKER_REPO_APP} --file=docker/php/Dockerfile .
 	rm -fr ./docker_temp/
 	@echo
