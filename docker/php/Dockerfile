@@ -65,6 +65,9 @@ RUN pecl install -o -f redis apcu  \
 &&  rm -rf /tmp/pear \
 &&  docker-php-ext-enable redis apcu
 
+RUN mkdir vendor
+run mkdir var
+
 # 5 Install PHP Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -80,8 +83,7 @@ USER www-data
 # 8 Copy existing application directory permissions
 COPY --chown=www-data:www-data . /usr/src/app
 
-RUN mkdir vendor
-run mkdir var
+
 RUN composer install --no-dev --optimize-autoloader
 
 # 10 Expose port 9000 and start php-fpm server
