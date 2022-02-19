@@ -44,6 +44,7 @@ RUN docker-php-ext-install pgsql
 RUN docker-php-ext-install pspell
 RUN docker-php-ext-enable pdo_pgsql pgsql pspell
 RUN docker-php-ext-install zip
+RUN docker-php-ext-configure intl && docker-php-ext-install intl
 
 # xdebug extensions
 RUN pecl install xdebug
