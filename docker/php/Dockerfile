@@ -87,14 +87,15 @@ RUN php bin/console cache:clear
 
 RUN mkdir -p /usr/src/app/public/uploads
 RUN chmod -R 777 /usr/src/app/public/uploads
-RUN chown -R www-data:www-data /usr/src/app
-# 9 Change current user
-USER www-data
 
 RUN yarn install
 RUN yarn encore prod
 
 RUN ./bootstrap.sh
+RUN chown -R www-data:www-data /usr/src/app
+# 9 Change current user
+USER www-data
+
 
 # 10 Expose port 9000 and start php-fpm server
 EXPOSE 9000
