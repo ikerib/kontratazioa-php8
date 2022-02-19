@@ -85,15 +85,13 @@ RUN composer install --no-scripts --prefer-dist --no-interaction --optimize-auto
 RUN php bin/console cache:clear
 
 RUN mkdir -p /usr/src/app/public/uploads
-RUN chown -R www-data:www-data /usr/src/app
 RUN chmod -R 777 /usr/src/app/public/uploads
-
+RUN chown -R www-data:www-data /usr/src/app
 # 9 Change current user
 USER www-data
 
 RUN yarn install
 RUN yarn encore prod
-RUN php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.jso
 
 # 10 Expose port 9000 and start php-fpm server
 EXPOSE 9000
