@@ -100,15 +100,18 @@ RUN mkdir -p /usr/src/app/public/uploads
 RUN chmod -R 777 /usr/src/app/public/uploads
 
 RUN yarn install
-RUN yarn encore prod
 
 RUN if [[ "$FOSJSDUMP" = "0"]] ; \
     then \
         echo "FOSJSROUTING DISABLED" ; \
     else \
         echo Argument is $FOSJSDUMP \
+        RUN php bin/console ckedit:install \
+        RUN php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json \
+        RUN php bin/console assets:install --symlink public \
     ; fi
 
+RUN yarn encore prod
 RUN chown -R www-data:www-data /usr/src/app
 # 9 Change current user
 USER www-data
