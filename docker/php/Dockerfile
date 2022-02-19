@@ -3,6 +3,8 @@ FROM php:8.0-fpm-alpine3.15
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 ARG DOCKER_TIMEZONE=${DOCKER_TIMEZONE}
+ARG DEBUGMODE=0
+ARG FOSJSDUMP=0
 
 ENV PS1="\u@\h:\w\\$ "
 
@@ -47,8 +49,15 @@ RUN docker-php-ext-install zip
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
 
 # xdebug extensions
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
+RUN if [[ "$DEBUGMODE" = "0" ]] ; \
+    then \
+        echo "DEBUG MODE NOT ENABLED"; \
+    else \
+        echo DEGUGMODE $DEBUGMODE \
+        RUN pecl install xdebug \
+        RUN docker-php-ext-enable xdebug \
+    ; fi
+
 #
 
 # ldap
@@ -92,15 +101,18 @@ RUN chmod -R 777 /usr/src/app/public/uploads
 
 RUN yarn install
 RUN yarn encore prod
-RUN chmod +x ./bootstrap.sh
+
+RUN if [[ "$FOSJSDUMP" = "0"]] ; \
+    then \
+        echo "FOSJSROUTING DISABLED" ; \
+    else \
+        echo Argument is $FOSJSDUMP \
+    ; fi
+
 RUN chown -R www-data:www-data /usr/src/app
 # 9 Change current user
-USER www-data
-COPY bootstrap.sh .
-USER root
-ENTRYPOINT ['bootstrap.sh']
-RUN chown -R www-data:www-data /usr/src/app
 USER www-data
 # 10 Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
+

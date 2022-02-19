@@ -25,6 +25,7 @@ services:
                 - USER_ID=${USER_ID}
                 - GROUP_ID=${GROUP_ID}
                 - DEBUGMODE=${DEBUGMODE}
+                - FOSJSDUMP=${FOSJSDUMP}
         user: "675847499:675807745"
         depends_on:
             - db
