@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Fitxategia;
+use App\Entity\FitxategiMota;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,10 +18,11 @@ class FitxategiaType extends AbstractType
         $builder
             ->add('name', null,[
                 'label' => 'Deskribapena: ',
-                'required' => true
+                'required' => true,
             ])
-            ->add('fitxategimota', null, [
+            ->add('fitxategimota', EntityType::class, [
                 'label' => 'Fitxategi Mota',
+                'class' => FitxategiMota::class,
                 'attr' => ['class' => 'form-control select2'],
 //                'placeholder' => 'Aukeratu bat',
                 'required' => true

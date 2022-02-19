@@ -315,7 +315,29 @@ $(function () {
     });
 
     $('.btnModalSaveFitxategiaUpload').on('click', function () {
-        $('#form_fitxategia_new').submit();
+        let valid = true;
+
+        if ( $('#fitxategia_name').val() === "") {
+            valid = false;
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Izen bat ezartzea beharrezkoa da.'
+            })
+        }
+
+        if ($('#fitxategia_uploadFile_file').get(0).files.length === 0) {
+            valid = false;
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Fitxategia aukeratzea ahaztu zaizu.'
+            })
+        }
+
+        if (valid) {
+            $('#form_fitxategia_new').submit();
+        }
     });
 
     $('.btnDeleteButton').on('click', function (e) {
