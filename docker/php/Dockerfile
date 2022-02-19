@@ -74,9 +74,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # 6 Remove Cache
 RUN rm -rf /var/cache/apk/*
-COPY bootstrap.sh .
-RUN chmod +x bootstrap.sh
-RUN ./bootstrap.sh
+RUN chmod +x /usr/src/app/bootstrap.sh
+RUN ls
+RUN ./usr/src/app/bootstrap.sh
 # 7 Add UID '1000' to www-data
 RUN usermod -u ${USER_ID} www-data
 
