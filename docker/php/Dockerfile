@@ -92,14 +92,15 @@ RUN chmod -R 777 /usr/src/app/public/uploads
 
 RUN yarn install
 RUN yarn encore prod
-
+RUN chmod +x ./bootstrap.sh
 RUN chown -R www-data:www-data /usr/src/app
 # 9 Change current user
 USER www-data
 COPY bootstrap.sh .
-RUN chmod +x ./bootstrap.sh
-RUN  ./bootstrap.sh
-
+USER root
+ENTRYPOINT ['bootstrap.sh']
+RUN chown -R www-data:www-data /usr/src/app
+USER www-data
 # 10 Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
