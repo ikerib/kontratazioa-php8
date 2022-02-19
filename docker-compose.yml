@@ -14,7 +14,7 @@ services:
 
     app:
         container_name: kontratazio_app
-        env_file: ./.env
+        env_file: ./.env.local
         extra_hosts:
             -   "host.docker.internal:host-gateway"
         build:
