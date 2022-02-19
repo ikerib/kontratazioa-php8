@@ -76,9 +76,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN rm -rf /var/cache/apk/*
 
 WORKDIR /usr/src/app
-COPY bootstrap.sh .
-RUN chmod +x ./bootstrap.sh
-RUN  ./bootstrap.sh
+
 # 7 Add UID '1000' to www-data
 RUN usermod -u ${USER_ID} www-data
 
@@ -99,7 +97,9 @@ RUN ./bootstrap.sh
 RUN chown -R www-data:www-data /usr/src/app
 # 9 Change current user
 USER www-data
-
+COPY bootstrap.sh .
+RUN chmod +x ./bootstrap.sh
+RUN  ./bootstrap.sh
 
 # 10 Expose port 9000 and start php-fpm server
 EXPOSE 9000
