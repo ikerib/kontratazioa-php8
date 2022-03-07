@@ -37,7 +37,7 @@ RUN apk update && apk add --no-cache \
     php8-zlib \
     postgresql-dev \
     aspell-dev \
-    autoconf 
+    autoconf
 
 
 # 4 Add and Enable PHP-PDO Extenstions
