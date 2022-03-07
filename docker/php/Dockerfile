@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine3.15
+FROM php:8.1-fpm-alpine3.15
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -17,6 +17,7 @@ WORKDIR /usr/src/app
 RUN apk update && apk add --no-cache \
     build-base shadow vim curl bash \
     zip libzip-dev \
+    libpng libpng-dev \
     git \
     php8 \
     php8-fpm \
@@ -36,7 +37,8 @@ RUN apk update && apk add --no-cache \
     php8-zlib \
     postgresql-dev \
     aspell-dev \
-    autoconf
+    autoconf 
+
 
 # 4 Add and Enable PHP-PDO Extenstions
 RUN docker-php-ext-install pdo pdo_mysql mysqli
@@ -47,6 +49,7 @@ RUN docker-php-ext-install pspell
 RUN docker-php-ext-enable pdo_pgsql pgsql pspell
 RUN docker-php-ext-install zip
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
+RUN docker-php-ext-install gd && apk del libpng-dev
 
 # xdebug extensions
 RUN if [[ "$DEBUGMODE" = "0" ]] ; \

@@ -1,7 +1,7 @@
 version:  '3.7'
 services:
     db:
-        container_name: kontratazio_db
+        container_name: kontratazioa_db
         image: postgres:${POSTGRES_VERSION:-13}-alpine
         environment:
             POSTGRES_DB: ${POSTGRES_DB}
@@ -13,7 +13,7 @@ services:
             - kontratazioa8_db:/var/lib/postgresql/data:rw
 
     app:
-        container_name: kontratazio_app
+        container_name: kontratazioa_app
         env_file: ./.env.local
         extra_hosts:
             -   "host.docker.internal:host-gateway"
@@ -38,7 +38,7 @@ services:
         working_dir: /usr/src/app
 
     nginx:
-        container_name: kontratazio_nginx
+        container_name: kontratazioa_nginx
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
@@ -55,7 +55,7 @@ services:
         working_dir: /usr/src/app
 
     redis:
-        container_name: kontratazio_redis
+        container_name: kontratazioa_redis
         image: redis:alpine
         ports:
             - "6380:637"
