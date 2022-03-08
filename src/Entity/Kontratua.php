@@ -49,6 +49,9 @@ class Kontratua
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $artxiboa;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $isFixed = false;
+
     /******************************************************************************************************************/
     /******************************************************************************************************************/
     /******************************************************************************************************************/
@@ -282,6 +285,18 @@ class Kontratua
     public function setArtxiboa(?string $artxiboa): self
     {
         $this->artxiboa = $artxiboa;
+
+        return $this;
+    }
+
+    public function getIsFixed(): ?bool
+    {
+        return $this->isFixed;
+    }
+
+    public function setIsFixed(?bool $isFixed): self
+    {
+        $this->isFixed = $isFixed;
 
         return $this;
     }

@@ -60,6 +60,9 @@ class KontratuaLote
     #[ORM\Column(type: 'string', length: 255)]
     private $luzapena;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $isFixed=false;
+
     /******************************************************************************************************************/
     /******************************************************************************************************************/
     /******************************************************************************************************************/
@@ -308,6 +311,18 @@ class KontratuaLote
                 $notification->setLote(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsFixed(): ?bool
+    {
+        return $this->isFixed;
+    }
+
+    public function setIsFixed(?bool $isFixed): self
+    {
+        $this->isFixed = $isFixed;
 
         return $this;
     }

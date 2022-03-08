@@ -40,6 +40,7 @@
                     <thead>
                         <tr>
                             <th>{{ "Espedientea" | trans}}</th>
+                            <th>{{ "Zuzendua" }}</th>
                             <th>{{ "Lote" | trans}}</th>
                             <th>{{ "Egoera" | trans}}</th>
                             <th>{{ "Kontratista" | trans}}</th>
@@ -55,6 +56,13 @@
                     {% for lote in loteak %}
                         <tr>
                             <td><a href="{{ path('kontratua_edit', { 'id': lote.kontratua.id }) }}">{{ lote.kontratua.espedientea }} - {{ lote.kontratua.izenaEus }}</a></td>
+                            <td>
+                                {% if lote.isFixed %}
+                                    <span class="badge badge-success">Bai</span>
+                                {% else %}
+                                    <span class="badge badge-warning">Ez</span>
+                                {% endif %}
+                            </td>
                             <td>{{ lote.name }}</td>
                             <td>{{ lote.kontratua.egoera }}</td>
                             <td>{{ lote.kontratista }}</td>
