@@ -38,6 +38,9 @@ class Egoera
     #[ORM\OneToMany(mappedBy: 'egoera', targetEntity: Kontratua::class)]
     private $kontratua;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $nameEs;
+
     /******************************************************************************************************************/
     /******************************************************************************************************************/
     /******************************************************************************************************************/
@@ -86,6 +89,18 @@ class Egoera
                 $kontratua->setEgoera(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNameEs(): ?string
+    {
+        return $this->nameEs;
+    }
+
+    public function setNameEs(?string $nameEs): self
+    {
+        $this->nameEs = $nameEs;
 
         return $this;
     }

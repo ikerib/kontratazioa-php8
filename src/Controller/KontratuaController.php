@@ -10,8 +10,11 @@ use App\Form\KontratuaType;
 use App\Repository\KontaktuakRepository;
 use App\Repository\KontratuaLoteRepository;
 use App\Repository\KontratuaRepository;
+use App\Utils\CheckImportedData;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -181,21 +184,44 @@ class KontratuaController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'kontratua_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Kontratua $kontratua, EntityManagerInterface $entityManager): Response
+    public function edit(
+        Request $request,
+        Kontratua $kontratua,
+        EntityManagerInterface $entityManager,
+        CheckImportedData $importedData
+    ): Response
     {
         $form = $this->createForm(KontratuaType::class, $kontratua);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+//            $valid = $this->isImportedDataFixed($kontratua);
+            $valid = $importedData->isImportedDataFixed($kontratua);
 
+            if ( $valid['result'] === false ) {
+                $this->addFlash('error', $valid );
+                return $this->redirectToRoute('kontratua_edit', ['id'=>$kontratua->getId()], Response::HTTP_SEE_OTHER);
+            }
+
+            $kontratua->setIsFixed(true);
+            $entityManager->flush();
             return $this->redirectToRoute('kontratua_index', [], Response::HTTP_SEE_OTHER);
+
         }
 
         return $this->renderForm('kontratua/edit.html.twig', [
             'kontratua' => $kontratua,
             'form' => $form,
         ]);
+    }
+
+
+
+    function validateDate($date, $format = 'Y-m-d')
+    {
+        $d = DateTime::createFromFormat($format, $date);
+        // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
+        return $d && $d->format($format) === $date;
     }
 
     #[Route('/{id}', name: 'kontratua_delete', methods: ['POST'])]

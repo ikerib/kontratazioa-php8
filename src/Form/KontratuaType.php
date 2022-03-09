@@ -51,12 +51,14 @@ class KontratuaType extends AbstractType
             ->add('mota', EntityType::class, [
                 'attr' => ['class' => 'form-control select2'],
                 'class' => Mota::class,
-//                'placeholder' => 'Aukeratu bat'
+                'placeholder' => 'Aukeratu bat',
+                'required' => false
             ])
             ->add('arduraduna', EntityType::class, [
                 'attr' => ['class' => 'form-control select2'],
                 'class' => Arduraduna::class,
-//                'placeholder' => 'Aukeratu bat'
+                'placeholder' => 'Aukeratu bat',
+                'required' => false
             ])
             ->add('oharrak', CKEditorType::class,[])
             ->add('prozedura', EntityType::class, [
@@ -67,12 +69,14 @@ class KontratuaType extends AbstractType
             ->add('saila', EntityType::class, [
                 'attr' => ['class' => 'form-control select2'],
                 'class' => Saila::class,
-//                'placeholder' => 'Aukeratu bat'
+                'placeholder' => 'Aukeratu bat'
+
             ])
             ->add('egoera', EntityType::class, [
                 'attr' => ['class' => 'form-control select2'],
                 'class' => Egoera::class,
-//                'placeholder' => 'Aukeratu bat'
+                'placeholder' => 'Aukeratu bat',
+                'required' => false
             ])
 //            ->add ('fitxategiak', CollectionType::class, [
 //                'entry_type' => FitxategiaType::class,

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: KontratuaLoteRepository::class)]
@@ -26,39 +27,39 @@ class KontratuaLote
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     #[Groups(['lote:read'])]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['lote:read'])]
-    private $name;
+    private ?string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['lote:read'])]
-    private $zenbatekoarenUnitatea;
+    private ?string $zenbatekoarenUnitatea;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    private $aurrekontuaIva;
+    private ?float $aurrekontuaIva;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    private $aurrekontuaIvaGabe;
+    private ?float $aurrekontuaIvaGabe;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    private $sinadura;
+    private ?\DateTimeInterface $sinadura;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $iraupena;
+    private ?string $iraupena;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    private $fetxaIraupena;
+    private ?\DateTimeInterface $fetxaIraupena;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    private $adjudikazioaIva;
+    private ?float $adjudikazioaIva;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    private $adjudikazioaIvaGabe;
+    private ?float $adjudikazioaIvaGabe;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $luzapena;
+    private ?string $luzapena;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $isFixed=false;
@@ -68,25 +69,28 @@ class KontratuaLote
     /******************************************************************************************************************/
 
     #[ORM\ManyToOne(targetEntity: Kontratua::class, inversedBy: 'lotes')]
-    private $kontratua;
+    private ?Kontratua $kontratua;
 
     #[ORM\ManyToOne(targetEntity: Kontratista::class, inversedBy: 'lote')]
-    private $kontratista;
+    private ?Kontratista $kontratista;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    private $prorroga1;
+    private ?\DateTimeInterface $prorroga1;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    private $prorroga2;
+    private ?\DateTimeInterface $prorroga2;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    private $prorroga3;
+    private ?\DateTimeInterface $prorroga3;
 
     #[ORM\OneToMany(mappedBy: 'lote', targetEntity: Notification::class)]
     #[ApiSubresource]
     private $notifications;
 
-    public function __construct()
+    #[ORM\ManyToOne(targetEntity: TipoIva::class, inversedBy: 'loteak')]
+    private $tipoiva;
+
+    #[Pure] public function __construct()
     {
         $this->notifications = new ArrayCollection();
     }
@@ -323,6 +327,18 @@ class KontratuaLote
     public function setIsFixed(?bool $isFixed): self
     {
         $this->isFixed = $isFixed;
+
+        return $this;
+    }
+
+    public function getTipoiva(): ?TipoIva
+    {
+        return $this->tipoiva;
+    }
+
+    public function setTipoiva(?TipoIva $tipoiva): self
+    {
+        $this->tipoiva = $tipoiva;
 
         return $this;
     }

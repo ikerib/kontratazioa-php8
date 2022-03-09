@@ -42,6 +42,8 @@ services:
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:
             - '@Redis'
+            - prefix: kontratazioa_
+            - ttl: 31536000
 
     App\Security\PasaiaLdapService:
         class: App\Security\PasaiaLdapService

@@ -56,9 +56,8 @@ RUN if [[ "$DEBUGMODE" = "0" ]] ; \
     then \
         echo "DEBUG MODE NOT ENABLED"; \
     else \
-        echo DEGUGMODE $DEBUGMODE \
-        RUN pecl install xdebug \
-        RUN docker-php-ext-enable xdebug \
+#        echo DEGUGMODE $DEBUGMODE \
+        pecl install xdebug && docker-php-ext-enable xdebug \
     ; fi
 
 #

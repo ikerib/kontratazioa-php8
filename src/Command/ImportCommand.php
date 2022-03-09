@@ -2,12 +2,14 @@
 
 namespace App\Command;
 
+use App\Entity\Arduraduna;
 use App\Entity\Kontratista;
 use App\Entity\Kontratua;
 use App\Entity\KontratuaLote;
 use App\Entity\Mota;
 use App\Entity\Prozedura;
 use App\Entity\Saila;
+use App\Utils\CheckImportedData;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -20,6 +22,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ImportCommand extends Command
 {
@@ -27,19 +30,28 @@ class ImportCommand extends Command
     protected static $defaultDescription = 'Add a short description for your command';
     private string $projectDir;
     private EntityManagerInterface $entityManager;
+    private $importedData;
+    private $serializer;
 
-    public function __construct($projectDir, EntityManagerInterface $entityManager)
+    public function __construct(
+        $projectDir,
+        EntityManagerInterface $entityManager,
+        CheckImportedData $importedData,
+        SerializerInterface $serializer
+    )
     {
         $this->projectDir = $projectDir;
         parent::__construct();
         $this->entityManager = $entityManager;
+        $this->importedData = $importedData;
+        $this->serializer = $serializer;
     }
 
     protected function configure(): void
     {
         $this
             ->addArgument('fitxategia', InputArgument::REQUIRED, 'fitxategia')
-//            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->addArgument('arduraduna', InputArgument::REQUIRED, 'Udala | Zentralizatua')
         ;
     }
 
@@ -58,12 +70,24 @@ class ImportCommand extends Command
         $progressBar->start();
         $aurrekoa =null;
         $aurrekoK = null;
+
+        $arduraduna = $this->entityManager->getRepository(Arduraduna::class)->findOneBy([
+                'name' => $input->getArgument('arduraduna')]
+        );
+        if ( !$arduraduna ) {
+            $arduraduna = new Arduraduna();
+            $arduraduna->setName($input->getArgument('arduraduna'));
+            $this->entityManager->persist($arduraduna);
+            $this->entityManager->flush();
+        }
+
         foreach ($kontratuak as $kontratua) {
             if ( $aurrekoa === $kontratua['ZERBITZUA'] ){
                 $this->addLote($io, $kontratua, $aurrekoK);
             } else {
                 $progressBar->setMessage($kontratua['ESPEDIENTEA /EXPEDIENTE']);
                 $k = new Kontratua();
+                $k->setArduraduna($arduraduna);
                 $k->setEspedientea($kontratua['ESPEDIENTEA /EXPEDIENTE']);
                 $k->setIzenaEus($kontratua['ZERBITZUA']);
                 $aurrekoa = $kontratua['ZERBITZUA'];
@@ -101,6 +125,7 @@ class ImportCommand extends Command
                 $aurrekoK = $k;
 
 
+
                 $this->entityManager->persist($k);
             }
             $progressBar->advance();
@@ -108,8 +133,9 @@ class ImportCommand extends Command
         $this->entityManager->flush();
         $progressBar->finish();
 
-
         $io->success('Inportazioa amaitu da.');
+        $io->writeln('');
+
 
         return Command::SUCCESS;
     }
