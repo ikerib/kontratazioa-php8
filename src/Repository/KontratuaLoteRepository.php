@@ -29,39 +29,34 @@ class KontratuaLoteRepository extends ServiceEntityRepository
             $qb->orderBy('k.saila', 'ASC');
             return $qb->getQuery()->getResult();
         }
+
         foreach ($myFilters as $key=>$value) {
-            // begiratu espazioak dituen
-            if ( $key === "kontratista" ) {
+            if ( $key === "name" ) {
+                $qb->andWhere('LOWER(k.izena_eus) LIKE LOWER(:name)')->setParameter('name', '%' . $value[0] . '%');
+                $qb->orWhere('LOWER(k.izena_es) LIKE LOWER(:name)')->setParameter('name', '%' . $value[0] . '%');
+            } else if ( $key === "kontratista" ) {
                 $qb->innerJoin('a.kontratista', 'kontratista');
                 $qb->andWhere('kontratista.id=:kontratistaID')->setParameter('kontratistaID', $value[0]);
-            } else if ( $key === "saila" ) {
+            } else if ( $key === "saila" && $value[0] !== "") {
                 $qb->innerJoin('k.saila', 'saila');
                 $qb->andWhere('saila.id=:sailaID')->setParameter('sailaID', $value[0]);
-            } else if ( $key === "egoera" ) {
+            } else if ( $key === "egoera"  && $value[0] !== "") {
                 $qb->innerJoin('k.egoera', 'egoera');
                 $qb->andWhere('egoera.id=:egoeraID')->setParameter('egoeraID', $value[0]);
             } else {
-                foreach ($value as $i => $iValue) {
-                    $searchTerms = explode('+', $iValue );
-                    foreach ($searchTerms as $k => $val) {
-                        if (strpos($val,"\"") !== false ){
-                            $val = str_replace("\"", '', $val);
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            // % % kendu bilaketa zehatza egin dezan. Clarak eskatuta.
-                            // $andStatements->add($qb->expr()->like("REPLACE(a.$key,',','')", $qb->expr()->literal('%' . trim($val) . '%')));
-                            $andStatements->add($qb->expr()->like("REPLACE(a.$key,',','')", $qb->expr()->literal(trim($val))));
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                        } else {
-                            $andStatements->add(
-                                $qb->expr()->like("a.$key", $qb->expr()->literal('%' . trim($val) . '%'))
-                            );
-                        }
-                    }
-                }
+//                foreach ($value as $i => $iValue) {
+//                    $searchTerms = explode('+', $iValue );
+//                    foreach ($searchTerms as $k => $val) {
+//                        if (str_contains($val, "\"")){
+//                            $val = str_replace("\"", '', $val);
+//                            $andStatements->add($qb->expr()->like("REPLACE(a.$key,',','')", $qb->expr()->literal(trim($val))));
+//                        } else {
+//                            $andStatements->add(
+//                                $qb->expr()->like("a.$key", $qb->expr()->literal('%' . trim($val) . '%'))
+//                            );
+//                        }
+//                    }
+//                }
             }
         }
         $qb->andWhere($andStatements);

@@ -31,13 +31,25 @@ class KontratuaController extends AbstractController
     #[Route('/', name: 'kontratua_index', methods: ['GET'])]
     public function index(Request $request, KontratuaLoteRepository $kontratuaLoteRepository): Response
     {
-        $myFilters = $this->getFinderParams($request->query->get('bilatzailea'));
-        $query = $kontratuaLoteRepository->getAllSortedBySaila($myFilters);
+//        $myFilters = $this->getFinderParams($request->query->get('bilatzailea'));
+//        $query = $kontratuaLoteRepository->getAllSortedBySaila($myFilters);
+        $query =null;
         $kontratuaLote = new KontratuaLote();
         $form = $this->createForm(BilatzaileaType::class, $kontratuaLote, [
             'method' => 'GET',
             'action' => $this->generateUrl('kontratua_index')
         ]);
+        $form->handleRequest($request);
+        if ( $form->isSubmitted() && $form->isValid()) {
+            $dat = $form->getData();
+            $data = [];
+            foreach ( $form as $key => $value) {
+                $data[$key] = $value->getData();
+            }
+//            $myFilters = $this->getFinderParams($request->query->get('bilatzailea'));
+            $myFilters = $this->getFinderParams($data);
+            $query = $kontratuaLoteRepository->getAllSortedBySaila($myFilters);
+        }
 
         return $this->render('kontratua/index.html.twig', [
             'loteak' => $query,
@@ -52,10 +64,15 @@ class KontratuaController extends AbstractController
         {
             foreach ($filters as $key => $value)
             {
-                if (($key !== '_token') && ($value !== ''))
+                if (($key !== '_token') && ($value !== '') && ($value !== null))
                 {
-                    $aFilter           = array_map('trim', explode('&', $value));
-                    $myFilters[ $key ] = $aFilter;
+                    if (is_string($value)) {
+                        $aFilter           = array_map('trim', explode('&', $value));
+                        $myFilters[ $key ] = $aFilter;
+                    } else {
+                        $aFilter           = array_map('trim', explode('&', $value->getId()));
+                        $myFilters[ $key ] = $aFilter;
+                    }
                 }
             }
         }

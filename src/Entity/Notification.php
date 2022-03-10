@@ -39,12 +39,16 @@ class Notification
     /******************************************************************************************************************/
     /******************************************************************************************************************/
 
+    public function __toString()
+    {
+        return $this->noiz;
+    }
+
     #[ORM\ManyToOne(targetEntity: KontratuaLote::class, inversedBy: 'notifications')]
     #[Groups(['notification:write'])]
     private $lote;
 
     #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'notification')]
-//    #[Groups(['notification:write'])]
     private $usuario;
 
     /******************************************************************************************************************/

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\KontaktuakRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -32,8 +33,21 @@ class Kontaktuak
     #[Groups(['kontaktua:read'])]
     private $email;
 
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     #[ORM\ManyToOne(targetEntity: Saila::class, inversedBy: 'kontaktuak')]
     private $saila;
+
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
+    /******************************************************************************************************************/
 
     public function getId(): ?int
     {

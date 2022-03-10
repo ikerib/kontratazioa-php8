@@ -27,7 +27,7 @@ class KontratuaLote
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     #[Groups(['lote:read'])]
-    private ?int $id;
+    private ?int $id=null;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['lote:read'])]

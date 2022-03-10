@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Egoera;
+use App\Entity\Kontratista;
 use App\Entity\KontratuaLote;
 use App\Entity\Saila;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,7 +19,9 @@ class BilatzaileaType extends AbstractType
             ->add('name', null, [
                 'label' => 'Izena'
             ])
-            ->add('kontratista', null, [
+            ->add('kontratista', EntityType::class, [
+                'class' => Kontratista::class,
+                'choice_value' => 'id',
                 'attr' => ['class' => 'form-control select2'],
                 'placeholder' => 'Aukeratu bat'
             ])
