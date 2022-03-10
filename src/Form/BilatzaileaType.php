@@ -37,9 +37,9 @@ class BilatzaileaType extends AbstractType
                 'placeholder' => 'Aukeratu bat',
                 'mapped' => false
             ])
-//            ->add('isFixed', null, [
-//                'label' => 'Zuzenduta'
-//            ])
+            ->add('isFixed', null, [
+                'label' => 'Zuzendu ganbekoak soilik erakutsi'
+            ])
         ;
     }
 

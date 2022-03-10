@@ -66,7 +66,7 @@ class KontratuaController extends AbstractController
             {
                 if (($key !== '_token') && ($value !== '') && ($value !== null))
                 {
-                    if (is_string($value)) {
+                    if (is_string($value) || (is_bool($value))) {
                         $aFilter           = array_map('trim', explode('&', $value));
                         $myFilters[ $key ] = $aFilter;
                     } else {
