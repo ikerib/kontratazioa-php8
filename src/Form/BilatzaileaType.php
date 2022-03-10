@@ -20,20 +20,23 @@ class BilatzaileaType extends AbstractType
             ])
             ->add('kontratista', null, [
                 'attr' => ['class' => 'form-control select2'],
-//                'placeholder' => 'Aukeratu bat'
+                'placeholder' => 'Aukeratu bat'
             ])
             ->add('saila', EntityType::class, [
                 'class' => Saila::class,
                 'attr' => ['class' => 'form-control select2'],
-//                'placeholder' => 'Aukeratu bat',
+                'placeholder' => 'Aukeratu bat',
                 'mapped' => false
             ])
             ->add('egoera', EntityType::class, [
                 'class' => Egoera::class,
                 'attr' => ['class' => 'form-control select2'],
-//                'placeholder' => 'Aukeratu bat',
+                'placeholder' => 'Aukeratu bat',
                 'mapped' => false
             ])
+//            ->add('isFixed', null, [
+//                'label' => 'Zuzenduta'
+//            ])
         ;
     }
 
@@ -41,6 +44,7 @@ class BilatzaileaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => KontratuaLote::class,
+            'csrf_protection' => false
         ]);
     }
 }
