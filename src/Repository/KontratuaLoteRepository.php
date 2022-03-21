@@ -34,7 +34,7 @@ class KontratuaLoteRepository extends ServiceEntityRepository
             if ( $key === "name" ) {
                 $qb->andWhere('LOWER(k.izena_eus) LIKE LOWER(:name)')->setParameter('name', '%' . $value[0] . '%');
                 $qb->orWhere('LOWER(k.izena_es) LIKE LOWER(:name)')->setParameter('name', '%' . $value[0] . '%');
-            } else if ( $key === "isFixed" ) {
+            } else if ( ($key === "isFixed") && ($value[0] !== "") ) {
                 $qb->andWhere('k.isFixed = :isfixed')->setParameter('isfixed', $value[0]);
             } else if ( $key === "kontratista" ) {
                 $qb->innerJoin('a.kontratista', 'kontratista');
@@ -52,4 +52,5 @@ class KontratuaLoteRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
 }

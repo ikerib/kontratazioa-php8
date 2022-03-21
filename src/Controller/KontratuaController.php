@@ -31,9 +31,7 @@ class KontratuaController extends AbstractController
     #[Route('/', name: 'kontratua_index', methods: ['GET'])]
     public function index(Request $request, KontratuaLoteRepository $kontratuaLoteRepository): Response
     {
-//        $myFilters = $this->getFinderParams($request->query->get('bilatzailea'));
-//        $query = $kontratuaLoteRepository->getAllSortedBySaila($myFilters);
-        $query =null;
+        $query =$kontratuaLoteRepository->findAll();
         $kontratuaLote = new KontratuaLote();
         $form = $this->createForm(BilatzaileaType::class, $kontratuaLote, [
             'method' => 'GET',
@@ -46,7 +44,6 @@ class KontratuaController extends AbstractController
             foreach ( $form as $key => $value) {
                 $data[$key] = $value->getData();
             }
-//            $myFilters = $this->getFinderParams($request->query->get('bilatzailea'));
             $myFilters = $this->getFinderParams($data);
             $query = $kontratuaLoteRepository->getAllSortedBySaila($myFilters);
         }
@@ -189,14 +186,6 @@ class KontratuaController extends AbstractController
         return $this->renderForm('kontratua/new.html.twig', [
             'kontratua' => $kontratua,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'kontratua_show', methods: ['GET'])]
-    public function show(Kontratua $kontratua): Response
-    {
-        return $this->render('kontratua/show.html.twig', [
-            'kontratua' => $kontratua,
         ]);
     }
 
