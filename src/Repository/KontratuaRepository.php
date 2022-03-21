@@ -91,9 +91,9 @@ class KontratuaRepository extends ServiceEntityRepository
     public function countByYear()
     {
         $qb = $this->createQueryBuilder('k');
-        $qb->select('COUNT(l.id) as zenbat, k.izena_eus', 'to_char(sinadura, "YYYYY") as Urtea');
+        $qb->select('COUNT(l.id) as zenbat', 'YEAR(l.sinadura) as Urtea');
         $qb->innerJoin('k.lotes', 'l');
-        $qb->groupBy('l.sinadura');
+        $qb->groupBy('Urtea');
         $qb->orderBy('Urtea', 'ASC');
         return $qb->getQuery()->getResult();
     }

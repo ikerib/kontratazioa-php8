@@ -220,3 +220,45 @@ new Chart(pieChartCanvas5, {
     data: pieData5,
     options: pieOptions5
 })
+
+/********************************************************************************************************/
+/*** CHART6 *********************************************************************************************/
+/********************************************************************************************************/
+const chart6Value = JSON.parse($('#txtChart6').val());
+let donutData6 = {
+    labels: [],
+    datasets: [
+        {
+            data: [],
+            backgroundColor : [],
+        }
+    ]
+}
+
+chart6Value.forEach((item) => {
+    console.log(item)
+    if ( item.Urtea === '') {
+        donutData6.labels.push('URTERIK GABE')
+    } else {
+        donutData6.labels.push(item.Urtea)
+    }
+    donutData6.datasets[0].data.push(item.zenbat)
+    donutData6.datasets[0].backgroundColor.push('#17a3b8')
+
+});
+const pieChartCanvas6 = $('#pieChart6').get(0).getContext('2d')
+const pieData6        = donutData6;
+const pieOptions6     = {
+    legend: { display: false },
+    maintainAspectRatio : false,
+    responsive : true,
+    title: {
+        display: true,
+        text: 'Kontratu kopurua: '
+    }
+}
+new Chart(pieChartCanvas6, {
+    type: 'bar',
+    data: pieData6,
+    options: pieOptions6
+})
