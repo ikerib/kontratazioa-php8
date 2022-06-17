@@ -53,4 +53,16 @@ class KontratuaLoteRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getAll()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a','k', 'ko', 'm')
+            ->innerJoin('a.kontratua', 'k')
+            ->innerJoin('a.kontratista', 'ko')
+            ->leftJoin('k.mota', 'm')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

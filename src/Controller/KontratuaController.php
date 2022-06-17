@@ -31,7 +31,7 @@ class KontratuaController extends AbstractController
     #[Route('/', name: 'kontratua_index', methods: ['GET'])]
     public function index(Request $request, KontratuaLoteRepository $kontratuaLoteRepository): Response
     {
-        $query =$kontratuaLoteRepository->findAll();
+        $query =$kontratuaLoteRepository->getAll();
         $kontratuaLote = new KontratuaLote();
         $form = $this->createForm(BilatzaileaType::class, $kontratuaLote, [
             'method' => 'GET',

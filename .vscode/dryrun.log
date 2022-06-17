@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/local/PASAIA/iibarguren/dev/www/kontratazioa'
+echo 'usage: make [target]'
+echo
+echo 'targets'
+egrep '^(.+)\:\ ##\ (.+)'  Makefile | column -t -c 2 -s ":#"
+make: Leaving directory '/home/local/PASAIA/iibarguren/dev/www/kontratazioa'
+ 

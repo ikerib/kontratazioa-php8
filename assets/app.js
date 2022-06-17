@@ -51,11 +51,11 @@ window.routing = Routing
 const axios = require('axios');
 
 $(function () {
-    const appLocale = $('#appLocale').val()
+    const _locale = $('#appLocale').val() ? $('#appLocale').val() : 'Eu';
+    const datatablesLocaleURL = "/build/datatables/" + _locale + ".json";
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    // console.log(urlParams.get('do'));
 
     if (urlParams.get('do')==='addLote') {
         const loteid = urlParams.get('loteid');
@@ -509,6 +509,9 @@ $(function () {
     );
 
     $('#myDatatable3').DataTable( {
+        language: {
+            url: datatablesLocaleURL
+        },
         order: [[2, 'asc']],
         rowGroup: {
             dataSrc: 0
