@@ -44,10 +44,6 @@ class Prozedura
     #[ORM\OneToMany(mappedBy: 'prozedura', targetEntity: Kontratua::class)]
     private $kontratuak;
 
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-
     public function getId(): ?int
     {
         return $this->id;
@@ -78,7 +74,7 @@ class Prozedura
     }
 
     /**
-     * @return Collection|Kontratua[]
+     * @return Collection<int, Kontratua>
      */
     public function getKontratuak(): Collection
     {

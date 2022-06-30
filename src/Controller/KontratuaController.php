@@ -180,7 +180,7 @@ class KontratuaController extends AbstractController
             $entityManager->persist($kontratua);
             $entityManager->flush();
 
-            return $this->redirectToRoute('kontratua_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('kontratua_edit', ['id' => $kontratua->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('kontratua/new.html.twig', [

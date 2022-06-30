@@ -21,3 +21,6 @@ yarn-error.log
 public/uploads
 docker/ssl
 docker/uploads
+/.vscode/
+/doc/
+/docker/nginx/ssl/

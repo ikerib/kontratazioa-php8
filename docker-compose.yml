@@ -1,73 +1,77 @@
-version:  '3.7'
+version: "3.7"
 services:
-    db:
-        container_name: kontratazioa_db
-        image: postgres:${POSTGRES_VERSION:-13}-alpine
-        environment:
-            POSTGRES_DB: ${POSTGRES_DB}
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-            POSTGRES_USER: ${POSTGRES_USER}
-        ports:
-            - "5432:5432"
-        volumes:
-            - kontratazioa8_db:/var/lib/postgresql/data:rw
+  db:
+    container_name: kontratazioa_db
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+    ports:
+      - "5432:5432"
+    volumes:
+      - v_kontratazioa_db:/var/lib/postgresql/data:rw
 
-    app:
-        container_name: kontratazioa_app
-        env_file: ./.env.local
-        extra_hosts:
-            -   "host.docker.internal:host-gateway"
-        build:
-            context: .
-            dockerfile: docker/php/Dockerfile
-            args:
-                - DOCKER_TIMEZONE=${DOCKER_TIMEZONE}
-                - USER_ID=${USER_ID}
-                - GROUP_ID=${GROUP_ID}
-                - DEBUGMODE=${DEBUGMODE}
-                - FOSJSDUMP=${FOSJSDUMP}
-        user: "${USER_ID}:${GROUP_ID}"
-        depends_on:
-            - db
-            - redis
-        volumes:
-            - '.:/usr/src/app'
-            - './docker/php/conf/php.ini:/usr/local/etc/php/php.ini:ro'
-            - './docker/php/conf/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro'
-            - './docker/uploads/:/usr/src/app/public/uploads'
-        working_dir: /usr/src/app
+  app:
+    container_name: kontratazioa_app
+    env_file: ./.env.local
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        - DOCKER_TIMEZONE=${DOCKER_TIMEZONE}
+        - USER_ID=${USER_ID}
+        - GROUP_ID=${GROUP_ID}
+    user: ${USER_ID}:${GROUP_ID}
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ".:/usr/src/app"
+      - "./docker/php/conf/php.ini:/usr/local/etc/php/php.ini:ro"
+      - "./docker/php/conf/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro"
+      - "./docker/uploads/:/usr/src/app/public/uploads"
+    working_dir: /usr/src/app
 
-    nginx:
-        container_name: kontratazioa_nginx
-        build:
-            context: ./
-            dockerfile: docker/nginx/Dockerfile
-        depends_on:
-            - app
-        ports:
-            - "80:80"
-            - "443:443"
-        volumes:
-            - './docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
-            - './docker/ssl/:/etc/nginx/ssl/'
-        volumes_from:
-            -   app
-        working_dir: /usr/src/app
+  nginx:
+    container_name: kontratazioa_nginx
+    build:
+      context: ./
+      dockerfile: docker/nginx/Dockerfile
+      args:
+        - HOSTNAME=${HOSTNAME}
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./docker/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "./docker/nginx/conf/nginx.conf:/etc/nginx/default.conf"
+      - "./docker/nginx/ssl/:/etc/nginx/ssl/"
+    volumes_from:
+      - app
+    working_dir: /usr/src/app
 
-    redis:
-        container_name: kontratazioa_redis
-        image: redis:alpine
-        ports:
-            - "6380:637"
-        volumes:
-            - kontratazioa8_redis:/data
+  redis:
+    container_name: kontratazioa_redis
+    image: redis:alpine
+    command: >
+      --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6380:637"
+    volumes:
+      - v_kontratazioa_redis:/data
+
 
 volumes:
-    kontratazioa8_db:
-    kontratazioa8_redis:
+  v_kontratazioa_db:
+  v_kontratazioa_redis:
 
 networks:
-    default:
-        ipam:
-            config:
-                - subnet: 172.101.0.0/16
+  default:
+    ipam:
+      config:
+        - subnet: 172.202.0.0/16

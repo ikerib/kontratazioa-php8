@@ -12,3 +12,4 @@ storage/framework/sessions/**
 storage/framework/views/**
 docker/ssl/
 /docker/uploads/
+/.vscode/

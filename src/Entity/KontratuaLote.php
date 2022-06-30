@@ -100,10 +100,6 @@ class KontratuaLote
         return ''.$this->name;
     }
 
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-
     public function getId(): ?int
     {
         return $this->id;
@@ -290,7 +286,7 @@ class KontratuaLote
     }
 
     /**
-     * @return Collection|Notification[]
+     * @return Collection<int, Notification>
      */
     public function getNotifications(): Collection
     {
@@ -341,5 +337,10 @@ class KontratuaLote
         $this->tipoiva = $tipoiva;
 
         return $this;
+    }
+
+    public function isIsFixed(): ?bool
+    {
+        return $this->isFixed;
     }
 }

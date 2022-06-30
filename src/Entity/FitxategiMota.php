@@ -40,11 +40,6 @@ class FitxategiMota
     #[ORM\OneToMany(mappedBy: 'fitxategiMota', targetEntity: Fitxategia::class)]
     private $fitxategiak;
 
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -63,7 +58,7 @@ class FitxategiMota
     }
 
     /**
-     * @return Collection|Fitxategia[]
+     * @return Collection<int, Fitxategia>
      */
     public function getFitxategiak(): Collection
     {

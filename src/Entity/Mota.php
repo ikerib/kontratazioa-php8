@@ -47,10 +47,6 @@ class Mota
     #[ORM\OneToMany(mappedBy: 'mota', targetEntity: Kontratua::class)]
     private $kontratuak;
 
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-
     public function getId(): ?int
     {
         return $this->id;
@@ -81,7 +77,7 @@ class Mota
     }
 
     /**
-     * @return Collection|Kontratua[]
+     * @return Collection<int, Kontratua>
      */
     public function getKontratuak(): Collection
     {

@@ -36,8 +36,8 @@ services:
                   - '%env(REDIS_HOST)%'
                   - '%env(int:REDIS_PORT)%'
             # Si tu servidor Redis requiere una contraseña, elimine el comentario de las siguientes líneas:
-            # - auth:
-            #     - '%env(REDIS_PASSWORD)%'
+            - auth:
+                  - '%env(REDIS_PASSWORD)%'
 
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:

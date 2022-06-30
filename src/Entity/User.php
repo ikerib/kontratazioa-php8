@@ -376,4 +376,14 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function isEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function isSailburuada(): ?bool
+    {
+        return $this->sailburuada;
+    }
 }

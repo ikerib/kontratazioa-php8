@@ -58,13 +58,14 @@ class Kontratua
 
     public function __toString()
     {
-        return '' . $this->espedientea . '-' . '' . $this->izena_eus;
+        return '' . $this->espedientea . '-' . ' ' . $this->izena_eus;
     }
 
     #[Pure] public function __construct()
     {
         $this->lotes = new ArrayCollection();
         $this->fitxategiak = new ArrayCollection();
+        $this->oharrak = null;
     }
 
     #[ORM\ManyToOne(targetEntity: Arduraduna::class, inversedBy: 'kontratua')]
@@ -87,10 +88,6 @@ class Kontratua
 
     #[ORM\OneToMany(mappedBy: 'kontratua', targetEntity: KontratuaLote::class)]
     private  $lotes;
-
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
 
     public function getId(): ?int
     {
@@ -157,6 +154,30 @@ class Kontratua
         return $this;
     }
 
+    public function getArtxiboa(): ?string
+    {
+        return $this->artxiboa;
+    }
+
+    public function setArtxiboa(?string $artxiboa): self
+    {
+        $this->artxiboa = $artxiboa;
+
+        return $this;
+    }
+
+    public function isIsFixed(): ?bool
+    {
+        return $this->isFixed;
+    }
+
+    public function setIsFixed(?bool $isFixed): self
+    {
+        $this->isFixed = $isFixed;
+
+        return $this;
+    }
+
     public function getArduraduna(): ?Arduraduna
     {
         return $this->arduraduna;
@@ -182,9 +203,9 @@ class Kontratua
     }
 
     /**
-     * @return Collection|Fitxategia[]
+     * @return Collection<int, Fitxategia>
      */
-    public function getFitxategiak(): array|Collection
+    public function getFitxategiak(): Collection
     {
         return $this->fitxategiak;
     }
@@ -248,9 +269,9 @@ class Kontratua
     }
 
     /**
-     * @return Collection|KontratuaLote[]
+     * @return Collection<int, KontratuaLote>
      */
-    public function getLotes(): Collection|array
+    public function getLotes(): Collection
     {
         return $this->lotes;
     }
@@ -277,28 +298,6 @@ class Kontratua
         return $this;
     }
 
-    public function getArtxiboa(): ?string
-    {
-        return $this->artxiboa;
-    }
 
-    public function setArtxiboa(?string $artxiboa): self
-    {
-        $this->artxiboa = $artxiboa;
-
-        return $this;
-    }
-
-    public function getIsFixed(): ?bool
-    {
-        return $this->isFixed;
-    }
-
-    public function setIsFixed(?bool $isFixed): self
-    {
-        $this->isFixed = $isFixed;
-
-        return $this;
-    }
 
 }

@@ -51,11 +51,6 @@ class Notification
     #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'notification')]
     private $usuario;
 
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -119,5 +114,15 @@ class Notification
         $this->usuario = $usuario;
 
         return $this;
+    }
+
+    public function isNotify(): ?bool
+    {
+        return $this->notify;
+    }
+
+    public function isEmailed(): ?bool
+    {
+        return $this->emailed;
     }
 }

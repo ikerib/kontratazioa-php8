@@ -359,7 +359,9 @@ $(function () {
     });
 
     $('#myDatatable').DataTable({
-        language: appLocale === "eu" ? dtLocaleEu : dtLocaleEs,
+        language: {
+            url: datatablesLocaleURL
+        },
         autoWidth: false,
         lengthChange: true,
         info: true,
@@ -406,7 +408,9 @@ $(function () {
     );
 
     $('#dtNoSorting').DataTable({
-        language: appLocale === "eu" ? dtLocaleEu : dtLocaleEs,
+        language: {
+            url: datatablesLocaleURL
+        },
         autoWidth: false,
         lengthChange: true,
         info: true,
@@ -454,7 +458,9 @@ $(function () {
     );
 
     $('#myDatatable2').DataTable({
-        language: appLocale === "eu" ? dtLocaleEu : dtLocaleEs,
+        language: {
+            url: datatablesLocaleURL
+        },
         columnDefs: [
             { targets: 2, visible: false },
             { targets: 3, visible: false },

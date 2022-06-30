@@ -41,11 +41,6 @@ class Egoera
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $nameEs;
 
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -64,7 +59,7 @@ class Egoera
     }
 
     /**
-     * @return Collection|Kontratua[]
+     * @return Collection<int, Kontratua>
      */
     public function getKontratua(): Collection
     {

@@ -38,12 +38,8 @@ class Arduraduna
     #[ORM\OneToMany(mappedBy: 'arduraduna', targetEntity: Kontratua::class)]
     private $kontratua;
 
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-    /******************************************************************************************************************/
-
     /**
-     * @return Collection|Kontratua[]
+     * @return Collection<int, Kontratua>
      */
     public function getKontratua(): Collection
     {
