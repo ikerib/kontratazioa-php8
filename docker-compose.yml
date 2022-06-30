@@ -40,8 +40,6 @@ services:
     build:
       context: ./
       dockerfile: docker/nginx/Dockerfile
-      args:
-        - HOSTNAME=${HOSTNAME}
     depends_on:
       - app
     ports:

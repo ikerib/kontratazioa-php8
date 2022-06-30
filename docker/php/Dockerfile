@@ -44,7 +44,7 @@ RUN rm -rf /var/cache/apk/*
 WORKDIR /usr/src/app
 
 # 7 Add UID '1000' to www-data
-RUN usermod -u ${USER_ID} www-data
+#RUN usermod -u ${USER_ID} www-data
 
 # 8 Copy existing application directory permissions
 COPY --chown=www-data:www-data . /usr/src/app
